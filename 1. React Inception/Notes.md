@@ -26,7 +26,7 @@ This is because we are using react inside our code. which means we need to impor
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Day 1 of Learning React and GitHub vs code syncing</title>
+    <title>Day 1 of Learning React</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
