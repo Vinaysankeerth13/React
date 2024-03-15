@@ -3,5 +3,9 @@
 }
 
 #child1{
+    color: rgb(255, 98, 0);
+}
+
+#child2{
     color: blue;
 }

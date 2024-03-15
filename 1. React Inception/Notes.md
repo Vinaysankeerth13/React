@@ -5,7 +5,7 @@ Inception:
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 
-- The order of files is very important we can't link our script (App.js) file before importing the react links.
+- The order of files is very important we can't link our script(App.js) file before importing the react links.
 
 DO :
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
