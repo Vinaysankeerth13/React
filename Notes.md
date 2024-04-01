@@ -1,4 +1,4 @@
-Inception:
+Day 1_Inception:
 
 1. We can use react by simply importing the cdn links.
 
@@ -290,3 +290,120 @@ const sum = (...args) => {
 };
 
 Arrow functions are commonly used in modern JavaScript development, especially when writing functional programming-style code, working with arrays or objects, and defining callbacks or event handlers.
+
+
+
+
+
+
+
+
+
+
+Day 2_Igniting the App:
+
+- What is NPM? 
+
+It is a package manager. That's it.
+
+Package.json is a configuration for npm.
+
+It is a package manager for JavaScript, primarily used for managing dependencies in Node.js projects. NPM allows developers to easily install, update, and manage third-party libraries and tools needed for their projects.
+
+Key features of NPM include:
+
+1. **Package Installation**: NPM provides a vast repository of packages that can be easily installed in a project using simple commands like `npm install <package-name>`.
+
+2. **Dependency Management**: NPM helps manage project dependencies by automatically installing the required packages and their dependencies. It also allows developers to specify exact versions or version ranges for dependencies.
+
+3. **Version Management**: NPM enables developers to manage different versions of packages within their projects, ensuring consistency and compatibility.
+
+4. **Scripting**: NPM allows developers to define and run custom scripts in their projects using the `scripts` field in the `package.json` file. These scripts can automate tasks such as testing, building, and deployment.
+
+5. **Publishing Packages**: Developers can publish their own packages to the NPM registry, making them available for others to use.
+
+NPM comes pre-installed with Node.js, so when you install Node.js on your system, NPM is also installed automatically. It is widely used in the JavaScript ecosystem and has become the de facto standard for managing dependencies in Node.js projects.
+
+- What is a bundler?
+
+A bundler is a tool used in web development to combine multiple separate files, typically written in languages like JavaScript, CSS, or TypeScript, into a single file (or sometimes multiple files) for efficient delivery to the client's web browser. Bundlers are essential for modern web development workflows, especially when working with large-scale applications comprised of numerous modules and dependencies.
+
+Key functions and features of bundlers include:
+
+1. **Module Resolution**: Bundlers resolve module dependencies and import statements in the codebase. They analyze the code to identify dependencies and construct a dependency graph.
+
+2. **Code Transformation**: Bundlers often perform transformations on the source code, such as transpilation (e.g., converting TypeScript to JavaScript) or applying optimizations (e.g., minification, dead code elimination) to reduce file size and improve performance.
+
+3. **Dependency Management**: Bundlers handle the inclusion and ordering of dependencies, ensuring that modules are bundled in the correct order to satisfy dependencies.
+
+4. **Asset Management**: In addition to JavaScript files, bundlers can handle other types of assets such as CSS, images, fonts, and more, bundling them together for efficient delivery.
+
+5. **Code Splitting**: Advanced bundlers support code splitting techniques to divide the bundled code into smaller, more manageable chunks. This enables lazy loading of code, where only the necessary parts of the application are loaded initially, improving page load performance.
+
+There are two kinds, the Dev dependency and the normal version. The Dev dependency version is used when the app is in development and normal version can be also used on production.
+
+Popular bundlers in the JavaScript ecosystem include webpack, Parcel, Rollup, and Browserify. These tools offer various configurations, plugins, and optimizations to tailor the bundling process to the specific needs of a project.
+
+- What is the difference between tilde(~) and caret(^) in this line "parcel": "^2.12.0"(in package.json) ?
+
+In simpler terms,
+
+A caret(^) updates the dependency when a minor upgrade is pushed out such as 2.12.1 
+whereas
+A tilde(~) updates the dependency when there is a major change such as 3.0
+
+It is always advised to use caret(^) as minor upgrades might not break the app but a major update in a dependency might break the app in case of a tilde(~).
+
+- What is package-lock.json and how is it different from package.json?
+
+Package-lock.json keeps track of the exact versions of the dependencies that we have installed in the project.
+
+`package.json` and `package-lock.json` are both important files used in Node.js projects, particularly those managed with npm (Node Package Manager) or Yarn. While they serve related purposes, they have distinct roles:
+
+1. **package.json**:
+   - **Role**: The `package.json` file is a metadata file for your project. It contains various details about the project, such as its name, version, description, dependencies, scripts, and more.
+   - **Contents**:
+     - Project metadata: name, version, description, author, license, etc.
+     - Dependencies: lists the packages required by the project, along with their versions.
+     - Scripts: defines custom scripts that can be executed via npm/yarn commands.
+     - Configuration settings: various configuration options for npm/yarn.
+   - **Editable**: Developers typically edit this file directly to manage project metadata, dependencies, and scripts.
+   - **Version Control**: This file should be versioned and committed to version control systems like Git.
+
+2. **package-lock.json**:
+   - **Role**: The `package-lock.json` file is used to lock down the version of each package's dependencies. It ensures that the project always installs the exact same versions of dependencies, regardless of where it is being installed.
+   - **Contents**:
+     - Dependency tree: lists the entire tree of dependencies, including their versions and resolved locations.
+     - Integrity checksums: provides cryptographic hashes to verify the integrity of downloaded packages.
+   - **Generated**: This file is automatically generated by npm/yarn when installing or updating dependencies. It should not be directly edited by developers.
+   - **Version Control**: Like `package.json`, `package-lock.json` should also be versioned and committed to version control to ensure consistent dependency resolution across different environments.
+
+In summary, while `package.json` contains metadata and project configuration, `package-lock.json` ensures deterministic dependency resolution by locking down the exact versions of dependencies. Both files are crucial for managing Node.js projects with npm or Yarn and should be used together.
+
+- What are transitive dependencies?
+
+Transitive dependencies refer to the dependencies of your project's direct dependencies. In other words, when your project depends on a library (direct dependency), and that library depends on other libraries, those additional libraries are considered transitive dependencies.
+
+Here's an example to illustrate transitive dependencies:
+
+Let's say your project directly depends on Library A. Library A, in turn, depends on Library B and Library C. In this scenario:
+- Library A is a direct dependency of your project.
+- Library B and Library C are transitive dependencies of your project because they are dependencies of Library A.
+
+Transitive dependencies are important to consider because they can affect your project's behavior and performance. They are automatically resolved and installed by package managers like npm or Yarn when you install your project's direct dependencies. Managing transitive dependencies becomes crucial to ensure that your project uses compatible versions of all dependencies and functions as expected. This is where tools like package-lock.json (in npm) or yarn.lock (in Yarn) come into play, as they help lock down the specific versions of transitive dependencies used in your project to maintain consistency across different environments.
+
+- Why do we not push our node modules to Git? 
+
+Primary reason is that all the metadata of the dependencies our project needs are already stored in package.json and the exact versions are stored in package-lock.json so instead of pushing the huge node modules file to Git, we can just push package.json and package-lock.json to Git and install node modules based on the metadata locally when and where we need them. 
+
+Node modules are not typically pushed to Git repositories for several reasons:
+
+1. **Size:** Node modules can be quite large, especially for projects with many dependencies. Including them in the repository would bloat the size of the repository unnecessarily.
+
+2. **Redundancy:** Node modules are usually installed via package managers like npm or Yarn based on the dependencies listed in the package.json file. Including node modules in the repository would be redundant since they can be easily recreated by running `npm install` or `yarn install` based on the package.json file.
+
+3. **Version Control:** The versions of dependencies listed in the package.json file are what really matter for reproducibility and consistency across different environments. Committing node modules to version control could lead to issues related to version conflicts, as different contributors or environments might have different versions of the same dependency committed.
+
+4. **Build Artifacts:** In some cases, node modules may include build artifacts or platform-specific binaries that are not relevant for version control or may cause issues when shared across different environments.
+
+For these reasons, it's a best practice to add a .gitignore file to your project and include node_modules/ in it. This ensures that node modules are not tracked by Git and not pushed to the repository.

@@ -1,0 +1,22 @@
+{
+  "name": "react",
+  "version": "1.0.0",
+  "description": "Learning how React works",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vinaysankeerth13/React.git"
+  },
+  "author": "Vinay Sankeerth Nalla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vinaysankeerth13/React/issues"
+  },
+  "homepage": "https://github.com/Vinaysankeerth13/React#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
