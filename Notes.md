@@ -407,3 +407,135 @@ Node modules are not typically pushed to Git repositories for several reasons:
 4. **Build Artifacts:** In some cases, node modules may include build artifacts or platform-specific binaries that are not relevant for version control or may cause issues when shared across different environments.
 
 For these reasons, it's a best practice to add a .gitignore file to your project and include node_modules/ in it. This ensures that node modules are not tracked by Git and not pushed to the repository.
+
+- What is npx ? 
+
+The `npx` command is a package runner tool that comes with npm (Node Package Manager) version 5.2.0 or higher. It is used to execute Node.js packages directly, without the need to install them globally or locally beforehand.
+
+When you run `npx <command>`, npm checks whether the specified command exists in your local `node_modules/.bin` directory or in the npm cache. If the command is found, `npx` runs it. If the command is not found locally, `npx` downloads the latest version of the package from the npm registry, executes the command, and then removes the package.
+
+For example, you can use `npx` to run a package's executable script:
+
+npx create-react-app my-app
+
+This command will download the latest version of the `create-react-app` package from the npm registry, execute it to create a new React application named `my-app`, and then clean up the downloaded package afterward.
+
+Using `npx` is particularly useful when you want to run one-off commands or scripts without cluttering your global or local npm installations with dependencies that you only use occasionally.
+
+- Why is it better to not use cdn links to install react rather do it using npm ?
+
+Using npm to install React instead of relying on CDN (Content Delivery Network) links offers several advantages:
+
+1. **Version Control**: With npm, you have precise control over the version of React you are installing. You can specify the exact version or use semantic versioning to ensure compatibility with your project. With CDN links, you typically get the latest version, which might introduce breaking changes or compatibility issues with your existing code.
+
+2. **Dependency Management**: npm allows you to manage dependencies effectively. When you install React using npm, it automatically installs all required dependencies and keeps track of them in your project's `package.json` file. This makes it easier to share your project with others and ensures consistent development environments across different machines.
+
+3. **Offline Development**: When you install React using npm, all dependencies are downloaded and stored locally in your project's `node_modules` directory. This means you can develop offline without relying on an internet connection to fetch React files from a CDN.
+
+4. **Build Process Integration**: Using npm to install React fits seamlessly into your project's build process. You can use tools like webpack, Babel, or TypeScript to compile and bundle your code, optimizing performance and ensuring browser compatibility. CDN links do not integrate as easily into build processes and may require additional configuration to work with build tools.
+
+5. **Security and Reliability**: npm provides a secure and reliable way to manage dependencies. Packages are regularly audited for security vulnerabilities, and you can easily update to patched versions when security issues are discovered. CDN links might not offer the same level of security and reliability, as you are relying on external servers to serve the files.
+
+Overall, while CDN links offer convenience for quickly prototyping or experimenting with React, using npm provides more control, consistency, and reliability for production-grade applications.
+
+- Why can we use normal script tag when we have import statements in our JavaScript file ? 
+
+When using import statements in JavaScript files, it indicates that the code is written using ES modules (ECMAScript modules), which is a standardized way of organizing and importing/exporting code in JavaScript.
+
+The `<script>` tag traditionally used in HTML files doesn't support ES module syntax. Instead, you need to use a special attribute called `type="module"` to inform the browser that the script should be treated as an ES module. This tells the browser to load the script as a module and handle imports correctly.
+
+Here's how you would use the `<script>` tag with `type="module"` to include a JavaScript file with import statements in an HTML file:
+
+<script type="module" src="your-script.js"></script>
+
+Using `type="module"` allows you to leverage the ES module syntax, including `import` and `export` statements, enabling better code organization and reuse.
+
+- How does parcel help in development ?
+
+Parcel is a web application bundler that simplifies the process of building modern web applications by automating tasks such as transpilation, bundling, and optimization. Here's how Parcel helps in development:
+
+1. **Zero Configuration**: Parcel requires little to no configuration out of the box. You can start using it immediately without the need to set up complex configuration files like webpack.
+
+2. **Automatic Dependency Resolution**: Parcel automatically resolves dependencies in your project. This means you don't have to explicitly specify import paths for modules, as Parcel figures it out for you.
+
+3. **Built-in Development Server**: Parcel comes with a built-in development server, allowing you to run your application locally during development. The development server includes features like hot module replacement (HMR), which updates modules in the browser without requiring a full page refresh.
+
+4. **Support for Various File Types**: Parcel supports a wide range of file types out of the box, including JavaScript, CSS, HTML, images, and more. This makes it easy to import and use different types of assets in your project without additional configuration.
+
+5. **Optimized Production Builds**: In addition to development builds, Parcel can generate optimized production builds for your application. It automatically minifies and bundles your code for production, optimizing performance and reducing file sizes.
+
+6. **Easy Integration with Frameworks and Libraries**: Parcel seamlessly integrates with popular JavaScript frameworks and libraries like React, Vue.js, and Angular. You can use Parcel with these frameworks without any additional configuration.
+
+Overall, Parcel simplifies the development workflow by providing a fast and efficient bundling process with minimal setup required, allowing developers to focus more on writing code and less on configuring build tools.
+
+- What is hot module replacement and what is the role of parcel in it?
+
+Hot Module Replacement (HMR) is a feature in modern web development that allows developers to update modules in an application without requiring a full page refresh. Instead of reloading the entire page, HMR only updates the modules that have changed, preserving the application's state and providing a faster development experience.
+
+When a developer makes changes to a module (e.g., a JavaScript file), the updated module is sent to the browser, which applies the changes without reloading the entire page. This means that developers can see their changes reflected immediately, making the development process more efficient and productive.
+
+Parcel plays a crucial role in enabling Hot Module Replacement by providing built-in support for this feature. When you run your application using Parcel's development server, HMR is automatically enabled, allowing you to take advantage of this feature without any additional configuration. Parcel handles the necessary wiring behind the scenes, making it seamless for developers to use HMR in their projects.
+
+Additionally, Parcel's HMR implementation is optimized for speed and reliability, ensuring that module updates are applied quickly and accurately. This helps developers maintain a fast and responsive development workflow, as they can see their changes reflected in the browser almost instantly without needing to manually refresh the page.
+
+- How does parcel track files ? 
+
+Parcel uses a content-based approach to track files and their dependencies, rather than relying on explicit configuration files or build scripts. It employs a technique called content hashing to generate unique identifiers (hashes) for each file based on its content. These hashes are used to determine if a file has changed since the last build.
+
+When Parcel builds a project, it recursively traverses the file tree starting from the entry point(s) specified in the project configuration. As it encounters files, it calculates a hash for each one and stores this information in a persistent cache. Additionally, Parcel analyzes the dependencies of each file to construct a dependency graph, which it uses to understand the relationships between different files in the project.
+
+During subsequent builds, Parcel compares the hashes of the files in the project with those stored in the cache. If a file's hash has changed, Parcel knows that the file has been modified and triggers a rebuild of the affected parts of the project. This incremental approach to building allows Parcel to efficiently update only the files that have changed, speeding up the development workflow.
+
+Overall, Parcel's content-based approach, combined with its use of content hashing and dependency analysis, enables efficient and reliable tracking of files and their dependencies, making it a powerful tool for building modern web applications.
+
+- Caching in parcel ?
+
+Yes, Parcel does cache certain information to improve build performance. When Parcel builds a project, it stores various data in a cache directory, including:
+
+1. **File metadata**: Parcel caches information about files, such as their paths, sizes, and modification timestamps.
+
+2. **Content hashes**: Parcel calculates and stores hashes of file contents to determine whether a file has changed since the last build.
+
+3. **Dependency graphs**: Parcel analyzes the dependencies of each file and constructs dependency graphs. These graphs are cached to avoid redundant analysis during subsequent builds.
+
+4. **Compiled output**: Parcel caches compiled output, such as bundled JavaScript, CSS, and other assets, to avoid recompilation when the source files haven't changed.
+
+By caching this information, Parcel can significantly speed up build times, especially for large projects with complex dependency trees. Additionally, Parcel automatically invalidates the cache when files or their dependencies change, ensuring that the build remains up to date.
+
+- What all does parcel do ?
+
+-- Dev Build 
+-- Local server
+-- HMR == Hot Module Replacement
+-- File watching algoritm - written in C++
+-- Caching - gives you faster builds
+-- Image optimizasion
+-- Minification
+-- Bundling
+-- Compress
+-- Consistent Hashing 
+-- Code Spliting
+-- Diffrential Bundiling - it bundles diffrently for each browser and its versions
+-- Diagonostics 
+-- Error Handling 
+-- HTTPS support 
+-- Tree Shaking - remove unused code
+-- Diffrent Dev and Production bundles
+Note : While running a build you might encounter an error saying the entry point you sepcified is not the main mentioned in package.json file so it adviced to get rid of main in the package.json
+
+- What is BrowsersList and how does it help in development ?
+
+Browserslist is a configuration file or setting that specifies which browsers and browser versions your application should support. It is commonly used in web development tools like bundlers (e.g., webpack, Parcel), CSS preprocessors (e.g., Autoprefixer), and JavaScript transpilers (e.g., Babel).
+
+Here's how Browserslist helps in development:
+
+1. **Compatibility**: Browserslist allows you to define a list of target browsers and their versions that your application should support. This ensures that your website or web application functions correctly and looks consistent across different browsers and browser versions.
+
+2. **Vendor Prefixing**: Browserslist is often used in conjunction with tools like Autoprefixer to automatically add vendor prefixes to CSS properties based on the specified target browsers. This saves developers from manually adding prefixes for different browser versions, improving development efficiency and reducing potential errors.
+
+3. **Optimized Bundling**: Build tools like webpack and Parcel use Browserslist to determine which browser-specific code transformations and optimizations are necessary during the bundling process. This helps generate optimized bundles tailored to the target browsers, resulting in smaller file sizes and improved performance.
+
+4. **Development Workflow**: Browserslist configurations can be shared across different development tools and environments, providing consistency in browser targeting throughout the development workflow. This simplifies configuration management and ensures that development, testing, and production environments use the same browser compatibility settings.
+
+Overall, Browserslist helps streamline the development process by providing a standardized way to define target browsers and automate browser-specific tasks, ultimately enhancing cross-browser compatibility and user experience.
+
