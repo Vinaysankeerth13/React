@@ -4,6 +4,8 @@
   "description": "Learning how React works",
   
   "scripts": {
+    "start" : "parcel index.html",
+    "build" : "parcel build indx.html",
     "test": "jest"
   },
   "repository": {

@@ -539,3 +539,131 @@ Here's how Browserslist helps in development:
 
 Overall, Browserslist helps streamline the development process by providing a standardized way to define target browsers and automate browser-specific tasks, ultimately enhancing cross-browser compatibility and user experience.
 
+
+
+
+
+
+
+
+
+
+
+Day 3_ Laying the foundation :
+
+- If you joining a company and find it difficult to start a new project then just go to there package.json and see in the scripts section if there are any commmands that run the app for you.
+
+So basically we can mention scripts inside our package.json that run our app such as,
+
+"start" : "parcel index.html",
+"build" : "parcel build indx.html",
+
+now instead of running the,
+**npx parcel index.html** we can just use **npm run start** 
+similarly **npm run build** for production ready application.
+
+- What is React.createElement ?
+
+`React.createElement` is a method used in React to create a React element. It takes three arguments:
+
+1. **Type**: The type of element to create. This can be a string representing an HTML element (e.g., `"div"`, `"span"`, `"h1"`) or a reference to a React component (e.g., `MyComponent`).
+
+2. **Props**: An object containing properties (or props) to be passed to the element or component being created.
+
+3. **Children**: Additional arguments representing the children of the element. These can be other React elements, strings, or numbers.
+
+For example:
+
+const element = React.createElement('div', { className: 'container' }, 'Hello, world!');
+
+This creates a React element representing a `<div>` with a class name of `'container'` and the text content `'Hello, world!'`.
+
+`React.createElement` creates a JavaScript object. Specifically, it creates a React element, which is a lightweight representation of a DOM element or a component.
+
+The structure of the object created by `React.createElement` typically looks like this:
+
+{
+  type: 'div',           // Type of element or component
+  props: {               // Props passed to the element or component
+    className: 'container',
+    children: 'Hello, world!'
+  }
+}
+
+This object describes what should appear on the screen. React then uses this object to construct and update the DOM accordingly. Each time you call `React.createElement`, you are describing what you want to render, and React takes care of rendering it efficiently.
+
+- What is JSX ?
+
+JSX stands for JavaScript XML. It's an extension to JavaScript syntax that allows developers to write HTML-like code directly within JavaScript. JSX makes it easier to create and manipulate the DOM elements in React applications by blending HTML-like syntax with JavaScript.
+
+Here's an example of JSX code:
+
+const element = <h1>Hello, world!</h1>;
+
+In the above example, `<h1>Hello, world!</h1>` is JSX syntax, which looks similar to HTML but is actually a JavaScript expression. When transpiled, JSX is converted into regular JavaScript function calls, typically using `React.createElement()` under the hood.
+
+The equivalent JavaScript code for the JSX above would be:
+
+const element = React.createElement('h1', null, 'Hello, world!');
+
+JSX allows developers to write code that is more readable and closely resembles the final output. It's widely used in React applications for defining the UI components.
+
+- Is JSX valid JavaScript Syntax ?
+
+No, JSX is not valid JavaScript syntax on its own. JSX is a syntax extension that allows you to write XML-like syntax within JavaScript code. It is commonly used in React applications to describe the structure of UI components.
+
+While browsers and JavaScript engines don't natively understand JSX, it is typically transformed into regular JavaScript code using a tool like Babel before being executed in the browser. This transformation process converts JSX syntax into regular function calls that create React elements.
+
+So, while JSX isn't directly understood by JavaScript engines, it's a widely used and accepted syntax in the React ecosystem thanks to tools like Babel that can transpile it into JavaScript code that browsers can understand.
+
+- What is Transpiling ?
+
+Imagine you have a secret code that only you and your friend understand, but your teacher can't read it. Now, if you want to show your secret code to your teacher, you'll need to translate it into something your teacher can understand. That's kind of what transpiling means in programming.
+
+When we say code is transpiled, it means that we're taking code written in one language, like modern JavaScript with all its fancy features, and converting it into an older version of JavaScript that all browsers can understand. It's like translating your secret code into a language that everyone can read, so that it works correctly on all computers, not just yours and your friend's.
+
+Transpiling is a process in which source code written in one programming language is converted into equivalent source code in another programming language. This is commonly done when developers want to write code using features from a newer version of a language but need it to be compatible with older versions or different environments.
+
+In the context of JavaScript, transpiling often refers to converting modern JavaScript code (written using newer syntax or features) into equivalent code that is compatible with older browsers or environments. For example, developers might use transpilers like Babel to convert code written using ES6 (ECMAScript 2015) syntax into ES5 (ECMAScript 5) syntax, which is supported by older browsers. This allows developers to take advantage of the latest language features while ensuring their code works across different platforms.
+
+- What is babel and how does it work ?
+
+Babel is a popular JavaScript compiler that enables developers to write code using the latest ECMAScript (JavaScript) syntax and features, while ensuring compatibility with older browsers and environments that may not support those features natively. Here's how it works:
+
+1. **Parsing**: Babel first parses the input code using a JavaScript parser. This step involves breaking down the code into its individual components (tokens) and building an abstract syntax tree (AST) representation.
+
+2. **Transformation**: Once the code is parsed, Babel applies a series of transformations to the AST. These transformations typically involve converting modern ECMAScript syntax and features (such as arrow functions, classes, template literals, etc.) into equivalent code that is compatible with older JavaScript environments. Babel also supports plugins that allow developers to customize the transformation process or add support for experimental language features.
+
+3. **Generation**: After applying transformations, Babel generates the output code by converting the modified AST back into JavaScript source code. This output code is typically optimized and minified to improve performance and reduce file size.
+
+4. **Output**: Finally, the transpiled code is outputted either to a file or directly to the browser, depending on how Babel is configured.
+
+Overall, Babel plays a crucial role in modern JavaScript development by allowing developers to take advantage of new language features without sacrificing compatibility with older browsers or environments. It's an essential tool in the JavaScript ecosystem, particularly for projects that target a wide range of platforms.
+
+- Explain about babel's role in converting JSX to build websites using React ?
+
+Babel plays a crucial role in converting JSX (JavaScript XML) code into standard JavaScript code that browsers can understand when building websites with React.
+
+React uses JSX, a syntax extension to JavaScript, which allows developers to write HTML-like code within JavaScript files. This JSX code is not directly understood by web browsers, which expect regular JavaScript. This is where Babel comes into play.
+
+Babel is a JavaScript compiler that transpiles modern JavaScript code (including JSX) into older versions of JavaScript that can be understood by most web browsers. Here's how Babel helps with JSX in React:
+
+1. **Parsing**: Babel first parses the code containing JSX and creates an Abstract Syntax Tree (AST) representation of the code.
+
+2. **Transforming**: Babel then applies specific plugins or presets to transform the JSX code in the AST. One of these plugins is the `@babel/plugin-transform-react-jsx` plugin, which is responsible for converting JSX into regular JavaScript function calls.
+
+   For example, the JSX code:
+
+   const element = <h1>Hello, World!</h1>;
+
+   is transformed by Babel into something like:
+
+   const element = React.createElement("h1", null, "Hello, World!");
+
+   Here, the `React.createElement` function is used to create a React element object that represents the JSX element.
+
+3. **Code Generation**: After transforming the AST, Babel generates the final, transpiled JavaScript code that can be understood by web browsers or bundlers like Webpack or Rollup.
+
+By converting JSX into standard JavaScript function calls, Babel enables React to work seamlessly with web browsers that don't natively support JSX syntax. This process also allows developers to write more concise and readable code using JSX, which is then converted into JavaScript that browsers can execute.
+
+It's important to note that Babel is not limited to JSX transformation; it can also transpile modern JavaScript features (e.g., arrow functions, classes, destructuring) into older, browser-compatible versions of JavaScript. This ensures that websites built with React and other modern JavaScript libraries can be used across a wide range of browsers, including older ones that may not fully support the latest JavaScript features.
