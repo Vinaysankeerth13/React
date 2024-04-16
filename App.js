@@ -1,15 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-// React Element
-// React.createElement => creates a javascript object => rendered to HTML element with help of reactDOM.
-
-const heading = React.createElement("h1",{id:"heading"}, "Vinay is learning react");
+// React Compon
+const Title = () => (
+  <h1 className="head" tabIndex="5">
+    Hi this is Vinay.
+  </h1>
+);
 const root = ReactDOM.createRoot(document.getElementById("root"));
+//root.render(heading);
 
-console.log(heading);
+// React Component
+// Class based Components - old
+// Functional Components - new
+const Heading = () => (
+    <div id="container">
+      <Title/>
+    <h1 className="heading">I'm learning React.</h1>
+  </div>
+);
 
-// JSX 
-const jsxHeading = <h1 id="heading">Vinay is learning React.</h1>
-console.log(jsxHeading);
-root.render(jsxHeading);
+root.render(<Heading/>);
