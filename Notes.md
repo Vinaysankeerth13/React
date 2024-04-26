@@ -1,26 +1,33 @@
-Day 1_Inception:
+# Day 1 Inception:
 
-1. We can use react by simply importing the cdn links.
+### We can use react by simply importing the cdn links.
 
+```
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+```
 
 - The order of files is very important we can't link our script(App.js) file before importing the react links.
 
 DO :
+``` javascript
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script src="App.js"></script>
+```
 
 Don't:
+``` javascript
 <script src="App.js"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+```
 
-This is because we are using react inside our code. which means we need to import it before we use it. It's like tring to make a chicken curry without chicken you can't.
+This is because we are using react inside our code. which means we need to import it before we use it. It's like trying to make a chicken curry without chicken you can't.
 
-2. Initially we used HTML to write a "Hello World" program.
+### Initially we used HTML to write a "Hello World" program.
 
+``` html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,14 +43,16 @@ This is because we are using react inside our code. which means we need to impor
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 </body>
 </html>
+```
 
+### Then we used JavaScipt to Write the same "Hello world" it looked something like this,
 
-3. Then we used JavaScipt to Write the same "Hello world" it looked something like this,
-
+``` javascript
             const heading = document.createElement("h1");
             heading.innerHTML = "Hello World from JavaScript!";
             const route = document.getElementById("root");
             route.appendChild(heading);
+```
 
 - `const heading = document.createElement("h1");`: This line creates a new `<h1>` element in the DOM using the `createElement()` method provided by the `document` object. It assigns this newly created element to the variable `heading`.
 
@@ -53,11 +62,14 @@ This is because we are using react inside our code. which means we need to impor
 
 - `route.appendChild(heading);`: This line appends the `<h1>` element (stored in the `heading` variable) as a child of the element with the ID "root" (stored in the `route` variable). This means that the `<h1>` element will be added inside the element with the ID "root" in the HTML document.
 
-4. But what if we wanted to create the same basic page using react, how would we do this ?
+### But what if we wanted to create the same basic page using react, how would we do this ?
 
+``` javascript
             const heading1 = React.createElement("h1",{id:"heading"},"Hello World From React!");
             const root = ReactDOM.createRoot(document.getElementById("root"));
             root.render(heading1);
+```
+
 Line 1 
 React.createElement is a function that takes in 3 arguments 
 - The first argument is about what kind of element we would like to create like div,h1,h2.
@@ -70,16 +82,18 @@ Line 2
 Line 3
 - root: This refers to the React root element that was created earlier using ReactDOM.createRoot().
 - render(): This method is used to render a React element into the specified root. It takes a single argument, which is the React element to be rendered.
-- heading1: This is the React element that we want to render. It was created earlier using React.createElement() and represents an <h1> element with the text "Hello World From React!" and an ID of "heading".
+- heading1: This is the React element that we want to render. It was created earlier using React.createElement() and represents an h1 element with the text "Hello World From React!" and an ID of "heading".
 
-5. What if we had to nest elements like in HTML ?
+### What if we had to nest elements like in HTML ?
 
 In HTML we generally do this right 
+``` html
 <div>
     <div>
          <h1>Hello World!</h1>
     </div>
 </div>
+```
 
 but how can we do this in react ?
 
@@ -358,7 +372,7 @@ It is always advised to use caret(^) as minor upgrades might not break the app b
 
 Package-lock.json keeps track of the exact versions of the dependencies that we have installed in the project.
 
-`package.json` and `package-lock.json` are both important files used in Node.js projects, particularly those managed with npm (Node Package Manager) or Yarn. While they serve related purposes, they have distinct roles:
+`package.json` and `package-lock.json` are both important files used in Node.js projects, particularly those managed with npm or Yarn. While they serve related purposes, they have distinct roles:
 
 1. **package.json**:
    - **Role**: The `package.json` file is a metadata file for your project. It contains various details about the project, such as its name, version, description, dependencies, scripts, and more.
@@ -410,7 +424,7 @@ For these reasons, it's a best practice to add a .gitignore file to your project
 
 - What is npx ? 
 
-The `npx` command is a package runner tool that comes with npm (Node Package Manager) version 5.2.0 or higher. It is used to execute Node.js packages directly, without the need to install them globally or locally beforehand.
+The `npx` command is a package runner tool that comes with npm version 5.2.0 or higher. It is used to execute Node.js packages directly, without the need to install them globally or locally beforehand.
 
 When you run `npx <command>`, npm checks whether the specified command exists in your local `node_modules/.bin` directory or in the npm cache. If the command is found, `npx` runs it. If the command is not found locally, `npx` downloads the latest version of the package from the npm registry, executes the command, and then removes the package.
 
@@ -539,8 +553,14 @@ Here's how Browserslist helps in development:
 
 Overall, Browserslist helps streamline the development process by providing a standardized way to define target browsers and automate browser-specific tasks, ultimately enhancing cross-browser compatibility and user experience.
 
+- Termial commands used to run the project 
 
-ß
+`npx parcel index.html`
+`npx parcel build index.html`n
+
+
+
+
 
 
 
@@ -667,5 +687,152 @@ Babel is a JavaScript compiler that transpiles modern JavaScript code (including
 By converting JSX into standard JavaScript function calls, Babel enables React to work seamlessly with web browsers that don't natively support JSX syntax. This process also allows developers to write more concise and readable code using JSX, which is then converted into JavaScript that browsers can execute.
 
 It's important to note that Babel is not limited to JSX transformation; it can also transpile modern JavaScript features (e.g., arrow functions, classes, destructuring) into older, browser-compatible versions of JavaScript. This ensures that websites built with React and other modern JavaScript libraries can be used across a wide range of browsers, including older ones that may not fully support the latest JavaScript features.
+
+- What is the diffrence between React element and React Component ?
+
+In React, there is a distinction between a React element and a React component:
+
+1. **React Element**:
+   - A React element is a lightweight object that represents a DOM element (or a component) in the React virtual DOM.
+   - It is the simplest form of a React component and is typically created using JSX syntax.
+   - React elements are immutable and describe what you want to see on the screen.
+
+   Example:
+
+   const element = <h1>Hello, world!</h1>;
+   
+
+2. **React Component**:
+   - A React component is a JavaScript class or function that returns a React element.
+   - Components allow you to split the UI into independent, reusable pieces, each responsible for a specific part of the UI.
+   - Components can be created using either class-based syntax (class components) or function-based syntax (functional components).
+   - They can also accept inputs called props and maintain their own internal state.
+
+   Example (Class Component):
+
+   class Greeting extends React.Component {
+     render() {
+       return <h1>Hello, {this.props.name}!</h1>;
+     }
+   }
+
+
+   Example (Functional Component):
+   
+   function Greeting(props) {
+     return <h1>Hello, {props.name}!</h1>;
+   }
+
+   Its basically a function that returns a jsx code.
+
+In summary, a React element is a description of what you want to see on the screen, while a React component is a JavaScript class or function that generates React elements based on input data (props) and state. Components are the building blocks of React applications, allowing for modularity, reusability, and maintainability.
+
+- How to create and render a React Element ?
+
+// React Element
+const heading = (
+  <h1 className="head" tabIndex="5">
+    Vinay is learning React.
+  </h1>
+);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(heading);
+
+- How to create and render a React Component ?
+
+Note: this is a functional component 
+
+const Heading = () => (
+  <div id="container">
+    <h1 className="heading">Hi I'm Vinay.</h1>
+  </div>
+);
+
+root.render(<Heading/>);
+
+- What if we have multiple components then how would we code and render it ?
+
+const Title = () => (
+  <h1 className="head" tabIndex="5">
+    Hi this is Vinay.
+  </h1>
+);
+const Heading = () => (
+    <div id="container">
+      <Title/>
+    <h1 className="heading">I'm learning React.</h1>
+  </div>
+);
+root.render(<Heading/>);
+
+It is basically like nesting.
+
+- What is Component composition ? 
+
+Component composition in React refers to the practice of building complex user interfaces by combining smaller, reusable components together. Instead of creating one large component that handles all the functionality and rendering, you break down the UI into smaller, manageable pieces, each responsible for a specific part of the interface.
+
+Here's how component composition works:
+
+1. **Reusable Components**: You create small, reusable components that encapsulate a specific piece of functionality or UI. For example, you might have a `Button` component, a `Navbar` component, or a `Card` component.
+
+2. **Combine Components**: You combine these smaller components together to create more complex UIs. For example, you might use the `Button` component inside the `Navbar` component, and then use the `Navbar` component inside a `Header` component.
+
+3. **Nested Components**: Components can be nested inside one another to create a hierarchy of UI elements. This allows you to build up complex UIs from simpler building blocks.
+
+4. **Passing Props**: Components can communicate with each other by passing props. Props allow you to pass data from a parent component to a child component, enabling customization and reusability.
+
+5. **Reusable and Modular**: Component composition promotes code reusability and modularity. You can easily reuse components across different parts of your application, and changes to one component don't affect other parts of the UI.
+
+Overall, component composition is a fundamental concept in React development that encourages a modular and reusable approach to building user interfaces. By breaking down your UI into smaller, composable components, you can create more maintainable, scalable, and flexible codebases.
+
+Example :
+
+import React from 'react';
+
+// Button component
+const Button = ({ onClick, children }) => {
+  return (
+    <button onClick={onClick} style={{ padding: '5px 10px', fontSize: '16px' }}>
+      {children}
+    </button>
+  );
+};
+
+// Navbar component
+const Navbar = () => {
+  return (
+    <nav style={{ backgroundColor: 'lightblue', padding: '10px' }}>
+      <Button onClick={() => console.log('Home clicked')}>Home</Button>
+      <Button onClick={() => console.log('About clicked')}>About</Button>
+      <Button onClick={() => console.log('Contact clicked')}>Contact</Button>
+    </nav>
+  );
+};
+
+// App component combining Navbar and other components
+const App = () => {
+  return (
+    <div>
+      <h1>Welcome to My Website</h1>
+      <Navbar />
+      <p>This is the main content of the website...</p>
+    </div>
+  );
+};
+
+export default App;
+
+In this example:
+
+We have a Button component that represents a simple button.
+We have a Navbar component that renders a navigation bar using the Button component.
+
+Finally, we have the App component, which combines the Navbar component with other content to create the main application layout.
+This demonstrates how smaller components (Button and Navbar) are composed together to create a larger, more complex component (App). Each component is responsible for a specific part of the UI, making the code easier to manage, reuse, and maintain.
+
+
+
+
+
 
 
