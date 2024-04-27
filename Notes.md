@@ -671,9 +671,9 @@ Example:
 
 ```javascript
 const element = React.createElement(
-  'div',
-  { className: 'container' },
-  React.createElement('h1', null, 'Hello, World!')
+  "div",
+  { className: "container" },
+  React.createElement("h1", null, "Hello, World!")
 );
 ```
 
@@ -707,7 +707,6 @@ This JSX code produces the same output as the previous `React.createElement` exa
 While `React.createElement` is the underlying function used by React to create elements, most developers prefer to use JSX syntax because it provides a more intuitive and developer-friendly way to write React components. JSX is widely adopted and recommended in the React community due to its readability, tooling support, and ease of use.
 
 However, it's important to note that JSX is not a requirement for using React. You can still create React elements using `React.createElement` directly if you prefer, but the majority of React developers use JSX for its benefits.
-
 
 ### Benifits of JSX
 
@@ -743,7 +742,7 @@ While browsers and JavaScript engines don't natively understand JSX, it is typic
 
 So, while JSX isn't directly understood by JavaScript engines, it's a widely used and accepted syntax in the React ecosystem thanks to tools like Babel that can transpile it into JavaScript code that browsers can understand.
 
-### Components in React 
+### Components in React
 
 In React, components are the building blocks of user interfaces. Components can be created using either function components or class components (although class components are being phased out in favor of function components with hooks). Here's how you can define components in React using JSX syntax:
 
@@ -751,7 +750,7 @@ In React, components are the building blocks of user interfaces. Components can 
 Function components are the recommended way to create components in modern React applications. They are simple JavaScript functions that return JSX code representing the component's UI.
 
 ```jsx
-import React from 'react';
+import React from "react";
 
 // Functional Component
 function Welcome(props) {
@@ -768,7 +767,7 @@ const Welcome = (props) => {
 Class components are the traditional way of creating components in React, using ES6 classes. While they are still supported, function components with hooks are generally preferred.
 
 ```jsx
-import React from 'react';
+import React from "react";
 
 class Welcome extends React.Component {
   render() {
@@ -781,7 +780,7 @@ class Welcome extends React.Component {
 Components can be nested inside other components, allowing for composition and reusability.
 
 ```jsx
-import React from 'react';
+import React from "react";
 
 function Welcome(props) {
   return (
@@ -801,7 +800,7 @@ function Greeting() {
 Components can receive data from their parent components through props (properties).
 
 ```jsx
-import React from 'react';
+import React from "react";
 
 function Welcome(props) {
   return (
@@ -821,13 +820,13 @@ function Greeting(props) {
 Class components can have state, which is an internal data store for managing component-specific data.
 
 ```jsx
-import React from 'react';
+import React from "react";
 
 class Counter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0
+      count: 0,
     };
   }
 
@@ -848,7 +847,7 @@ class Counter extends React.Component {
 Function components can use hooks to manage state and lifecycle methods.
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function Counter() {
   const [count, setCount] = useState(0);
@@ -1081,10 +1080,10 @@ Here are a couple of examples to illustrate how it works:
 1. **Rendering Dynamic Content**:
 
 ```jsx
-import React from 'react';
+import React from "react";
 
 const App = () => {
-  const name = 'John Doe';
+  const name = "John Doe";
   const age = 30;
 
   return (
@@ -1103,7 +1102,7 @@ In this example, we have two JavaScript variables `name` and `age`. We can injec
 2. **Conditional Rendering**:
 
 ```jsx
-import React from 'react';
+import React from "react";
 
 const App = () => {
   const isLoggedIn = true;
@@ -1111,11 +1110,7 @@ const App = () => {
   return (
     <div>
       <h1>Welcome</h1>
-      {isLoggedIn ? (
-        <p>You are logged in</p>
-      ) : (
-        <p>Please log in to continue</p>
-      )}
+      {isLoggedIn ? <p>You are logged in</p> : <p>Please log in to continue</p>}
     </div>
   );
 };
@@ -1128,10 +1123,10 @@ In this example, we use a ternary operator inside the curly braces to conditiona
 You can inject any valid JavaScript expression inside the curly braces in JSX, including function calls, calculations, and more complex logic. Here's another example that demonstrates rendering a list of items:
 
 ```jsx
-import React from 'react';
+import React from "react";
 
 const App = () => {
-  const items = ['Apple', 'Banana', 'Orange'];
+  const items = ["Apple", "Banana", "Orange"];
 
   return (
     <div>
@@ -1160,9 +1155,10 @@ In JSX (JavaScript XML), the curly braces `{}` are used to embed expressions or 
    When you have a pair of curly braces containing a capitalized identifier like `TitleComponent`, it is interpreted as a React component. React treats these capitalized identifiers as custom components, and they will be rendered within the JSX markup.
 
    Example:
+
    ```jsx
-   import React from 'react';
-   import TitleComponent from './TitleComponent';
+   import React from "react";
+   import TitleComponent from "./TitleComponent";
 
    const App = () => {
      return (
@@ -1178,8 +1174,9 @@ In JSX (JavaScript XML), the curly braces `{}` are used to embed expressions or 
    When you have a pair of curly braces containing an expression (e.g., a variable, a function call, or any valid JavaScript expression), the expression will be evaluated, and its result will be rendered within the JSX markup.
 
    Example:
+
    ```jsx
-   const name = 'John';
+   const name = "John";
    const greetUser = () => `Hello, ${name}!`;
 
    const App = () => {
@@ -1196,6 +1193,7 @@ In JSX (JavaScript XML), the curly braces `{}` are used to embed expressions or 
    An empty set of curly braces is used when you want to create a fragment or an empty component. Fragments are a way to group multiple elements together without adding an extra node to the DOM tree.
 
    Example:
+
    ```jsx
    const App = () => {
      return (
@@ -1210,6 +1208,122 @@ In JSX (JavaScript XML), the curly braces `{}` are used to embed expressions or 
    In this example, `<>...</>` is a shorthand syntax for `<React.Fragment>...</React.Fragment>`, which is a way to create a fragment without adding an extra node to the DOM tree.
 
 It's important to note that JSX is just a syntax extension for writing React components, and it ultimately gets transpiled into regular JavaScript function calls using `React.createElement()`. The curly braces are used to embed JavaScript expressions within the JSX markup, allowing you to create dynamic and interactive user interfaces.
+
+```jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+// React Components
+const title = (
+  <h1 className="head" tabIndex="5">
+    {" "}
+    Hi this is Vinay as a Functional.{" "}
+  </h1>
+);
+const Title = () => (
+  <h1 className="head" tabIndex="5">
+    Hi this is Vinay as a component.{" "}
+  </h1>
+);
+const Title1 = () => (
+  <h1 className="head" tabIndex="5">
+    {" "}
+    Hi this is Vinay as a component 1.{" "}
+  </h1>
+);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+//root.render(heading);
+// React Component // Class based Components - old
+// Functional Components - new
+const Heading = () => (
+  <div id="container">
+    {title}
+    <Title />
+    <Title></Title>
+    {Title1()}
+    <h1 className="heading">I'm learning React.</h1>
+  </div>
+);
+root.render(<Heading />);
+```
+Explaination for code of day 3: 
+
+Sure, let's go through the code and explain the concepts used in it.
+
+1. **Importing React and ReactDOM**:
+```jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+```
+These lines import the necessary modules from the React and ReactDOM libraries. The `React` module is used for creating React components, and the `ReactDOM` module provides methods for rendering those components to the browser's DOM (Document Object Model).
+
+2. **React Components**:
+In this code, we have three different ways of defining React components:
+
+```jsx
+const title = (
+  <h1 className="head" tabIndex="5">
+    Hi this is Vinay as a Functional.
+  </h1>
+);
+```
+This is a JSX element stored in a variable `title`. It's not a React component per se, but it can be rendered within a React component.
+
+```jsx
+const Title = () => (
+  <h1 className="head" tabIndex="5">
+    Hi this is Vinay as a component.
+  </h1>
+);
+
+const Title1 = () => (
+  <h1 className="head" tabIndex="5">
+    Hi this is Vinay as a component 1.
+  </h1>
+);
+```
+These are functional components defined using arrow functions. Functional components are the modern and recommended way of creating components in React. They are simple JavaScript functions that return JSX elements representing the component's UI.
+
+3. **Creating a Root for Rendering**:
+```jsx
+const root = ReactDOM.createRoot(document.getElementById("root"));
+```
+This line creates a root for rendering React components. The `createRoot` method from `ReactDOM` is used to create a new root for rendering, and it takes the DOM element where the React app will be rendered (in this case, the element with the id `"root"`).
+
+4. **Rendering Components**:
+```jsx
+const Heading = () => (
+  <div id="container">
+    {title}
+    <Title />
+    <Title></Title>
+    {Title1()}
+    <h1 className="heading">I'm learning React.</h1>
+  </div>
+);
+
+root.render(<Heading />);
+```
+Here, we have another functional component called `Heading`. Inside this component, we render various elements and components:
+
+- `{title}`: This renders the JSX element stored in the `title` variable.
+- `<Title />` and `<Title></Title>`: These render the `Title` component.
+- `{Title1()}`: This calls the `Title1` function component and renders its return value.
+- `<h1 className="heading">I'm learning React.</h1>`: This renders a regular JSX element.
+
+Finally, we call `root.render(<Heading />)` to render the `Heading` component inside the DOM element with the id `"root"`.
+
+5. **JSX Syntax**:
+The code utilizes JSX syntax, which is a syntax extension to JavaScript that allows you to write HTML-like code within your JavaScript files. JSX elements are transpiled into regular JavaScript function calls using `React.createElement()` during the build process.
+
+In the code, you can see JSX elements like `<h1>`, `<div>`, etc. These elements have attributes like `className` (instead of `class` in regular HTML) and `tabIndex`. JSX also allows embedding JavaScript expressions within curly braces `{}`, as demonstrated with `{title}` and `{Title1()}`.
+
+6. **Components and Composition**:
+React encourages modular and reusable code through the use of components. In this example, we have multiple components (`Title`, `Title1`, and `Heading`) that can be composed together to build the final UI. This promotes code reusability and separation of concerns.
+
+Overall, this code demonstrates the basics of creating and rendering React components using functional components, JSX syntax, and ReactDOM for rendering the components to the browser's DOM.
+
+# Day 4 Talk is cheap, show me the code:
 
 
 
