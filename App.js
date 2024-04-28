@@ -9,6 +9,11 @@ import ReactDOM from "react-dom/client";
  * - Search
  * - Card Container (for restaurants)
  *   - Restaurant cards
+ *     - Image
+ *     - Name
+ *     - Rating
+ *     - Cuisine
+ *     - Delivery time
  * Footer
  * - Copyrights
  * - Links
@@ -33,10 +38,45 @@ const Header = () => {
       </div>
   )
 }
+
+const RestaurantCard = () =>{
+  return (
+    <div className="res-card" style={{backgroundColor: "#BACD92"}}>
+      <div>
+      <img className="resImg" src="https://play-lh.googleusercontent.com/vWZoY6BBFTAUDpSwsyzGiWdKXkLXN6VdFm9DXaMPiWs8LdsfCdlWHRNu2zrjqfElKlC8"></img> 
+      </div>
+      <h3>Concu</h3>
+      <h4>Dessert, Italian and Coffee</h4>
+      <h5>4.3 Stars</h5>
+      <h5>38 min</h5>
+    </div>
+  )
+}
+
+const Body = () =>{
+  return(
+    <div className="body">
+      <div className="searchbar">Search</div>
+      <div className="rest-container">
+          <RestaurantCard/>
+          <RestaurantCard/>
+          <RestaurantCard/>
+          <RestaurantCard/>
+          <RestaurantCard/>
+          <RestaurantCard/>
+          <RestaurantCard/>
+          <RestaurantCard/>
+          <RestaurantCard/>
+          <RestaurantCard/>
+      </div>
+    </div>
+  )
+}
 const AppLayout = () =>{
   return (
     <div className="app">
       <Header/>
+      <Body/>
     </div>
   )
 }
