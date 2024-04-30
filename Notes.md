@@ -1495,3 +1495,578 @@ Using the array index as a key in React is not recommended because it can lead t
 4. **Accessibility Concerns**: Using array indices as keys can cause issues with accessibility, particularly for screen readers. Screen readers rely on stable and meaningful identifiers to navigate and understand the content of a webpage. Using array indices as keys may result in confusing or non-sequential reading order for users relying on screen readers.
 
 To avoid these issues, it's recommended to use stable and unique identifiers as keys whenever possible. If your data doesn't have such identifiers, you can generate unique keys based on the item's content or use libraries like `uuid` to create unique identifiers. This ensures that React can efficiently and accurately update your components when the data changes.
+
+## Is JSX mandatory for React?
+
+No, JSX is not mandatory for React. JSX is an optional syntax extension to JavaScript that allows you to write HTML-like code in your JavaScript files. It was introduced with React to make it easier to work with the component structure and UI elements.
+
+While JSX is widely used in React projects and recommended by the React team, it is possible to create React components and build React applications without using JSX. You can use plain JavaScript to create React elements using React's `createElement` method.
+
+Here's an example of creating a React element without JSX:
+
+```jsx
+const element = React.createElement(
+  'div',
+  null,
+  'Hello, World!'
+);
+```
+
+This code creates a `div` element with the text "Hello, World!" using React's `createElement` function.
+
+However, as your components become more complex, writing React code without JSX can become verbose and harder to read. JSX provides a more concise and familiar syntax that closely resembles HTML, making it easier to understand and maintain your code.
+
+Most React developers prefer to use JSX because it simplifies the process of creating and working with components. However, if you have a specific reason to avoid JSX, you can build React applications using plain JavaScript.
+
+## Is ES6 mandatory for React?
+
+No, ES6 (also known as ES2015) is not mandatory for React. React can be used with any version of JavaScript, including older versions like ES5.
+
+However, many modern React codebases and tutorials heavily utilize ES6 features like arrow functions, classes, template literals, destructuring, and import/export statements. These features can make React code more concise, readable, and maintainable.
+
+Here are a few reasons why ES6 is commonly used with React:
+
+1. **Class Components**: Before the introduction of React Hooks, class components were the primary way to create components with state and lifecycle methods. These components relied on ES6 class syntax.
+
+2. **Arrow Functions**: Arrow functions provide a more concise syntax for defining function expressions and lexically bind the `this` value, which is useful for event handlers and callback functions in React.
+
+3. **Destructuring**: Destructuring makes it easier to extract values from objects and arrays, which is helpful when working with props and state in React components.
+
+4. **Template Literals**: Template literals allow for more readable string interpolation, which can be useful for constructing dynamic strings or JSX elements.
+
+5. **Module System**: ES6 introduced a standard module system with `import` and `export` statements, which is used extensively in React projects to manage dependencies and organize code.
+
+While you can use React with older versions of JavaScript, most modern React projects and tools (like Create React App) assume ES6 or a more recent version of JavaScript by default. If you need to support older browsers or environments that don't support ES6, you'll need to transpile (convert) your code using a tool like Babel.
+
+In summary, while ES6 is not strictly mandatory for React, using ES6 features can make your React code more readable, maintainable, and aligned with modern JavaScript best practices.
+
+**"{TitleComponent}" vs {< TitleComponent/>} vs{< TitleComponent></ TitleComponent>} in JSX?**
+
+In JSX, all three of these forms are valid and represent different ways of rendering a React component, but they have slightly different implications and use cases.
+
+1. `{TitleComponent}`:
+This form is used when you want to render a React component as a self-closing tag. It is suitable for components that don't require any children or additional props. This syntax is a shorthand version of `{<TitleComponent />}`.
+
+2. `{<TitleComponent />}`:
+This syntax is also used for rendering a self-closing component. It's an explicit way of writing a component tag without any children or additional props. This form is more common and more widely used than the shorthand version.
+
+3. `{<TitleComponent></TitleComponent>}`:
+This syntax is used when you want to render a component with children or additional props. The opening and closing tags allow you to nest other elements or components inside the `TitleComponent`, or pass props as attributes in the opening tag.
+
+Here's an example to illustrate the differences:
+
+```jsx
+// Rendering a self-closing component
+<div>
+  {TitleComponent} {/* or {<TitleComponent />} */}
+</div>
+
+// Rendering a component with children
+<div>
+  {<TitleComponent>Hello, World!</TitleComponent>}
+</div>
+
+// Rendering a component with props
+<div>
+  {<TitleComponent title="My Title" />}
+</div>
+
+// Rendering a component with children and props
+<div>
+  {<TitleComponent title="My Title">Hello, World!</TitleComponent>}
+</div>
+```
+
+In general, you should use the `{<TitleComponent />}` form when rendering a self-closing component without children or props, and the `{<TitleComponent>...</TitleComponent>}` form when rendering a component with children or additional props.
+
+The shorthand `{TitleComponent}` form is less common and can make your code harder to read if you're not familiar with this syntax. It's usually recommended to use the more explicit `{<TitleComponent />}` or `{<TitleComponent>...</TitleComponent>}` forms for better readability and consistency.
+
+## How can I write comments in JSX?
+
+In JSX, you can write comments using the same syntax as JavaScript comments. There are two types of comments you can use:
+
+1. **Single-line comments**
+Single-line comments use two forward slashes (`//`) and span until the end of the line. For example:
+
+```jsx
+import React from 'react';
+
+const App = () => {
+  // This is a single-line comment
+  return <div>Hello, World!</div>;
+}
+
+export default App;
+```
+
+2. **Multi-line comments**
+Multi-line comments are enclosed between `/*` and `*/`. They can span multiple lines. For example:
+
+```jsx
+import React from 'react';
+
+const App = () => {
+  /*
+   * This is a
+   * multi-line
+   * comment
+   */
+  return <div>Hello, World!</div>;
+}
+
+export default App;
+```
+
+You can place comments anywhere in your JSX code, both inside and outside of the JSX tags. However, it's important to note that comments inside JSX tags must be enclosed in curly braces `{}` because JSX treats any text without curly braces as a string literal.
+
+```jsx
+const App = () => {
+  return (
+    <div>
+      {/* This is a comment inside JSX tags */}
+      Hello, World!
+    </div>
+  );
+}
+```
+
+Comments are useful for adding explanations, notes, or temporary disabling code during development. However, it's generally recommended to keep comments concise and clear, as excessive or unnecessary comments can make the code harder to read and maintain.
+
+## What is <React.Fragment></React.Fragment>and <></> ?
+
+`<React.Fragment></React.Fragment>` and `<></>` are both ways to define a React Fragment, which is a special type of component that doesn't render any extra HTML elements.
+
+Fragments are used when you need to return multiple elements from a React component, as React components can only return a single root element. Instead of wrapping the elements in a `div` or other HTML tag, you can use a Fragment to avoid introducing unnecessary nodes in the DOM.
+
+Here's an example that demonstrates the difference between using a `div` wrapper and a Fragment:
+
+```jsx
+// Using a div wrapper
+const MyComponent = () => {
+  return (
+    <div>
+      <h1>Title</h1>
+      <p>Paragraph 1</p>
+      <p>Paragraph 2</p>
+    </div>
+  );
+}
+
+// Using a Fragment
+const MyComponent = () => {
+  return (
+    <React.Fragment>
+      <h1>Title</h1>
+      <p>Paragraph 1</p>
+      <p>Paragraph 2</p>
+    </React.Fragment>
+  );
+}
+
+// Using the shorthand <></> syntax (introduced in React 16.2)
+const MyComponent = () => {
+  return (
+    <>
+      <h1>Title</h1>
+      <p>Paragraph 1</p>
+      <p>Paragraph 2</p>
+    </>
+  );
+}
+```
+
+All three examples above render the same output, but the last two use Fragments instead of a `div` wrapper.
+
+The `<React.Fragment></React.Fragment>` syntax is the longer, more explicit way to use a Fragment, while `<></>`is a shorthand syntax introduced in React 16.2. Both achieve the same result, but the shorthand syntax is more concise and easier to read.
+
+Fragments are lightweight and don't add any extra nodes to the DOM, making them preferable over wrapping elements in `div` or other HTML tags when you don't need those extra elements for styling or other purposes.
+
+It's important to note that Fragments can also be used with `keys` when rendering lists of elements, as keys must be placed on the outermost element in a list.
+
+## What is Virtual DOM?
+
+The Virtual DOM (Virtual Document Object Model) is a programming concept used in modern JavaScript UI libraries and frameworks like React, Vue, and others. It is a lightweight in-memory representation of the actual DOM (Document Object Model), which is the tree-like structure representing the HTML elements on a web page.
+
+The main purpose of the Virtual DOM is to improve the performance of updating the UI in React applications. When the state of a React component changes, the Virtual DOM compares the new state with the previous state and calculates the minimum number of changes needed to update the actual DOM. This process is called "reconciliation" or "diffing."
+
+Here's how the Virtual DOM works:
+
+1. **Render**: When a React component is rendered, React creates a Virtual DOM tree, which is a lightweight JavaScript object representation of the actual DOM.
+
+2. **Diffing**: When the component's state or props change, React creates a new Virtual DOM tree. It then compares (diffs) the new Virtual DOM tree with the previous Virtual DOM tree to identify the minimal set of changes needed to update the actual DOM.
+
+3. **Batch Updates**: After the diffing process, React applies the minimal set of changes to the actual DOM in a batch operation, which is more efficient than directly manipulating the DOM for each individual change.
+
+The Virtual DOM provides several benefits:
+
+1. **Improved Performance**: Manipulating the actual DOM is a relatively slow operation, as it involves updating the layout and repainting the UI. By minimizing the number of DOM updates, React can significantly improve the performance of UI updates, especially in complex applications.
+
+2. **Efficient Diffing**: The Virtual DOM diffing algorithm is highly optimized and can quickly identify the minimal set of changes needed to update the UI, reducing the number of expensive DOM operations.
+
+3. **Cross-Platform**: The Virtual DOM is a conceptual representation of the UI, allowing React to be used for rendering on different platforms, such as native mobile apps (React Native) or server-side rendering (Next.js, Gatsby).
+
+It's important to note that the Virtual DOM is an implementation detail of React and is not directly exposed to developers. React handles the creation, diffing, and updating of the Virtual DOM internally, allowing developers to focus on building components and managing state.
+
+While the Virtual DOM introduces some overhead in terms of memory and processing, the performance benefits it provides are generally considered worthwhile, especially for complex and frequently updating UIs.
+
+## What is Reconciliation in React?
+
+Reconciliation is the process in React where it updates the actual DOM to match the new desired state represented by the React elements. It is the process that follows after the Virtual DOM has been created and diffed with the previous Virtual DOM representation.
+
+When a React component's state or props change, React creates a new Virtual DOM tree based on the updated state or props. This new Virtual DOM tree is then compared (diffed) with the previous Virtual DOM tree to identify the minimum set of changes needed to update the actual DOM.
+
+The reconciliation process consists of the following steps:
+
+1. **Render the New Virtual DOM Tree**: React renders the new Virtual DOM tree based on the updated state or props of the component.
+
+2. **Diff the New Virtual DOM Tree with the Previous Virtual DOM Tree**: React compares the new Virtual DOM tree with the previous Virtual DOM tree and calculates the minimum set of changes required to update the actual DOM.
+
+3. **Apply the Minimal Set of Changes to the Actual DOM**: React applies the minimal set of changes identified during the diffing process to the actual DOM, updating only the necessary nodes. This process is designed to be efficient and minimize expensive DOM operations.
+
+React uses a heuristic algorithm called the "diffing algorithm" to determine the minimal set of changes needed to update the actual DOM. This algorithm is based on two key assumptions:
+
+1. **Different Types of Elements**: If two elements have different types (e.g., `<div>` and `<span>`), React will tear down the old tree and build the new tree from scratch.
+
+2. **Same Types of Elements**: If two elements have the same type, React will update the attributes of the DOM node and recursively update the children.
+
+Additionally, React uses "keys" to identify which child elements have changed, been added, or been removed. By assigning unique keys to each element in a list, React can efficiently update only the necessary elements in the list, without having to re-render the entire list.
+
+The reconciliation process is an essential part of React's performance optimization strategy. By minimizing the number of DOM operations required to update the UI, React can efficiently update even complex user interfaces without causing significant performance issues.
+
+## What is React Fiber?
+
+React Fiber is a complete rewrite of React's core algorithm, introduced in React 16.8. It is an ongoing re-implementation of React's reconciliation algorithm, which is responsible for efficiently updating the React components and their respective DOM nodes when changes occur.
+
+The main goals of React Fiber were to:
+
+1. **Improve Performance**: React Fiber aims to provide better performance, especially for applications with frequent updates and complex user interfaces.
+
+2. **Better React Component Tree Traversal**: React Fiber introduces a new way of traversing and updating the React component tree, allowing better use of system resources and prioritizing updates for critical components.
+
+3. **Support for Async Rendering**: React Fiber enables asynchronous rendering, which means that React can pause and resume rendering work as needed, allowing higher-priority updates to take precedence and improving the responsiveness of the application.
+
+4. **Improved Error Handling**: React Fiber provides better error handling and recovery mechanisms, making it easier to understand and fix issues in complex React applications.
+
+5. **Layout Thrashing Reduction**: React Fiber reduces the amount of layout thrashing (unnecessary DOM rearrangements) that can occur during updates, improving the overall user experience.
+
+React Fiber achieves these goals by introducing several new concepts and features:
+
+1. **Fiber Nodes**: React Fiber represents the component tree using a linked list data structure called "Fiber nodes." These nodes contain information about the component, its children, and their state.
+
+2. **Incremental Rendering**: With Fiber, React can pause and resume rendering work as needed, allowing higher-priority updates to take precedence and improving the responsiveness of the application.
+
+3. **Prioritization of Work**: React Fiber allows developers to prioritize certain updates over others, ensuring that critical updates are handled first and improving the overall user experience.
+
+4. **Improved Commit Phase**: React Fiber introduces a new "commit phase" that handles the actual updating of the DOM, reducing the impact of layout thrashing.
+
+5. **Backwards Compatibility**: React Fiber is designed to be backwards compatible, allowing existing React applications to upgrade without breaking changes.
+
+While React Fiber is a significant architectural change, it is largely transparent to developers writing React components. However, it provides a solid foundation for future performance improvements and new features in React.
+
+It's important to note that React Fiber is an ongoing effort, and its capabilities and benefits will continue to evolve with future releases of React.
+
+## Why we need keys in React? When do we need keys in React?
+
+In React, keys are used to identify unique elements in a list or array of elements. They help React keep track of which items have changed, been added, or been removed between renders. This is especially important when you're dynamically rendering a list of components, as React needs a way to efficiently update and re-order the components in the list without having to completely re-render the entire list.
+
+We need to use keys in React in the following situations:
+
+1. **Rendering Lists or Arrays**: Whenever you're rendering a list or array of components, you should provide a unique key for each item in the list. For example, when rendering a list of `<li>` elements, each `<li>` should have a unique key.
+
+```jsx
+const numbers = [1, 2, 3, 4, 5];
+
+const ListItems = () => (
+  <ul>
+    {numbers.map(number => (
+      <li key={number.toString()}>
+        {number}
+      </li>
+    ))}
+  </ul>
+);
+```
+
+2. **Reordering or Updating Items**: If you need to reorder or update items in a list, React uses the keys to determine which components need to be re-rendered, updated, or moved. Without keys, React would have to re-render the entire list, which can lead to performance issues, especially for large lists.
+
+3. **Dynamically Added or Removed Items**: When items are dynamically added or removed from a list, keys help React identify which components have been added, removed, or moved, so it can update the DOM efficiently.
+
+4. **Nested Components**: If you have nested components within a list, you'll need to provide keys at the top-level of the nested components as well.
+
+It's important to choose keys that are unique and stable across re-renders. A good choice for a key is a unique identifier from your data source, such as an `id` or a combination of unique values. Using indexes as keys should be avoided if the order of items in the list may change, as it can lead to performance issues and unexpected behavior.
+
+If you don't provide keys when rendering a list of components, React will display a warning in the console, reminding you to add keys. While your application will still work without keys, it may have performance issues and display unexpected behavior, especially when updating or reordering items in the list.
+
+## Can we use index as keys in React?
+
+Using the index as a key in React is possible but not recommended in most cases. React specifically warns against using indexes as keys, as it can lead to performance issues and unexpected behavior when the order of items in the list changes.
+
+Here's why using indexes as keys is generally not a good idea:
+
+1. **Performance Issues**: When the order of items in the list changes (e.g., reordering, adding, or removing items), React will re-render all components in the list even if their content hasn't changed. This is because React uses the keys to identify which components have been added, removed, or moved, and when indexes are used as keys, React can't reliably determine which components have actually changed.
+
+2. **Unexpected Behavior**: If you insert an item at the beginning of the list, React will re-render all existing items, as their indexes will have changed. This can lead to unexpected behavior, such as losing component state or causing unnecessary re-renders.
+
+3. **Key Uniqueness**: Indexes are not guaranteed to be unique across different render passes. If you have multiple lists on the same page, their indexes could collide, leading to unpredictable behavior.
+
+However, there are certain scenarios where using the index as a key can be acceptable:
+
+1. **Static Lists**: If you have a list that will never be reordered and its items will never be added or removed, using indexes as keys is acceptable since the order will never change.
+
+2. **Rendering a Simple List of Non-Component Elements**: If you're rendering a simple list of non-component elements (e.g., `<li>` elements), using indexes as keys may be acceptable since there's no component state or lifecycle methods involved.
+
+In general, it's recommended to use unique and stable identifiers from your data source as keys. For example, if you're rendering a list of items from an API, you could use the `id` property from the API response as the key. If no unique identifier is available, you can generate a unique key based on a combination of the item's properties.
+
+Here's an example of using a unique identifier as a key:
+
+```jsx
+const people = [
+  { id: 1, name: 'John' },
+  { id: 2, name: 'Jane' },
+  { id: 3, name: 'Bob' },
+];
+
+const ListItems = () => (
+  <ul>
+    {people.map(person => (
+      <li key={person.id}>
+        {person.name}
+      </li>
+    ))}
+  </ul>
+);
+```
+
+By following this practice, you'll ensure that React can efficiently update and reorder components in your list, improving performance and avoiding unexpected behavior.
+
+## What are props in React and how can we use them ?
+
+In React, `props` (short for properties) are a way to pass data from a parent component to a child component. They are a way to make components reusable and configurable, allowing you to customize their behavior and appearance.
+
+Here are the main points about props in React:
+
+1. **Props are read-only**: Once a parent component passes props to a child component, the child component cannot modify those props. This helps maintain the one-way data flow in React, where data flows from parent to child.
+
+2. **Props are immutable**: Props should be treated as immutable data, meaning they should not be directly modified within the component. If you need to modify some data based on a prop, you should use state instead.
+
+3. **Props can be any data type**: Props can be strings, numbers, booleans, arrays, objects, functions, or even React elements.
+
+There are two ways to use props in React:
+
+**1. Functional Components:**
+In functional components, props are passed as an argument to the function:
+
+```jsx
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+// Usage
+<Welcome name="John" />;
+```
+
+You can also use destructuring to access specific props directly:
+
+```jsx
+function Welcome({ name }) {
+  return <h1>Hello, {name}</h1>;
+}
+
+// Usage
+<Welcome name="John" />;
+```
+
+**2. Class Components:**
+In class components, props are accessible through `this.props`:
+
+```jsx
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+
+// Usage
+<Welcome name="John" />;
+```
+
+Here are some additional ways to use props:
+
+- **Spreading props:** You can use the spread operator (`...`) to pass all props from a parent component to a child component:
+
+```jsx
+const ChildComponent = (props) => <div {...props} />;
+```
+
+- **Prop types:** You can use the `prop-types` library to define the expected data types for your component's props, which helps catch bugs and document your component's API.
+
+- **Default props:** You can define default values for props using the `defaultProps` static property in class components or the function component's second argument.
+
+- **Children prop:** React components can also receive children elements as a special `children` prop.
+
+Props are a fundamental concept in React, allowing you to create reusable and composable components. By passing data through props, you can build complex user interfaces from small, isolated building blocks.
+
+## What is a Config Driven UI ?
+
+A Config Driven UI (User Interface) is an approach to building user interfaces where the structure, behavior, and appearance of the UI components are determined by configuration data, rather than being hard-coded directly into the application code.
+
+In a Config Driven UI, the UI components are designed to be flexible and adaptable, with their behavior and rendering controlled by external configuration files or data sources. These configuration sources can be in various formats such as JSON, YAML, XML, or even databases.
+
+The main idea behind Config Driven UIs is to separate the concerns of the UI logic and the UI configuration, making it easier to modify, extend, or customize the UI without having to change the application code. This approach provides several benefits:
+
+1. **Flexibility and Extensibility**: By decoupling the UI logic from the configuration, it becomes easier to add, modify, or remove UI components without touching the core application code. This allows for greater flexibility and extensibility in the long run.
+
+2. **Customization**: Config Driven UIs enable easier customization of the UI for different users, environments, or scenarios. Different configurations can be loaded to provide tailored experiences or branding for different clients or use cases.
+
+3. **Simplified Code Maintenance**: Since the UI logic is separated from the configuration, the codebase becomes more maintainable and easier to reason about. Developers can focus on building robust UI components, while UI designers or product managers can manage the configuration files without needing to dive into the code.
+
+4. **Dynamic UI Updates**: With a Config Driven UI, it's possible to update the UI dynamically at runtime by loading new configurations, without requiring a full application restart or redeployment.
+
+5. **Separation of Concerns**: By separating the UI logic and configuration, it promotes a better separation of concerns, making it easier for different teams (e.g., developers and designers) to work on their respective areas without stepping on each other's toes.
+
+Config Driven UIs are often used in enterprise applications, content management systems, or any application that requires a high degree of flexibility and customization in the UI. However, it's important to strike a balance between configurability and complexity, as overly complex configuration systems can become difficult to manage and maintain.
+
+## What did we do in this episode :
+
+[Day 4 code](https://docs.google.com/document/d/1DNmkEywI8R1QDVvv-Fqhrstl-Z7nsECn2-sNVCo-i6k/edit?usp=sharing)
+
+We built the basic UI of a food delivery application in react using components:
+
+It displays a header with a logo and navigation buttons, and a body section with a search bar and a container for displaying restaurant cards. Each restaurant card shows information about a restaurant, including its image, name, cuisine types, rating, cost for two, and delivery time.
+
+The application is structured into several components:
+
+1. `Header` component: Renders the header section with the logo and navigation buttons.
+2. `RestaurantCard` component: Renders a card displaying information about a restaurant.
+3. `Body` component: Renders the search bar and a container that maps over a list of restaurants (`resList`) and renders a `RestaurantCard` component for each restaurant.
+4. `AppLayout` component: The root component that combines the `Header` and `Body` components to create the overall layout of the application.
+
+The restaurant data is hardcoded in the `resList` array, which is an array of objects containing information about different restaurants.
+
+When the application is rendered using `ReactDOM.createRoot` and `root.render(<AppLayout/>)`, it displays the header, search bar, and a list of restaurant cards on the web page.
+
+There are multiple concepts that we're used to build this code:
+
+These concepts include :
+
+Certainly! This code covers several important React concepts:
+
+1. **Components**: The code is divided into reusable components like `Header`, `RestaurantCard`, `Body`, and `AppLayout`. This demonstrates the concept of building user interfaces using composable components in React.
+
+2. **JSX**: The code uses JSX syntax, which allows you to write HTML-like code within JavaScript. JSX is a syntax extension that makes it easier to create and work with React components.
+
+3. **State and Props**: Although not explicitly demonstrated in this code, the concept of state and props is fundamental in React. `RestaurantCard` receives data as props (`resData`) from its parent component (`Body`). This showcases the one-way data flow in React, where data is passed from parent to child components via props.
+
+4. **Rendering Lists**: The `Body` component renders a list of `RestaurantCard` components by mapping over the `resList` array. This demonstrates how to render dynamic lists in React using the `map` function.
+
+5. **Conditional Rendering**: While not present in this specific code snippet, React provides various techniques for conditional rendering, such as using ternary operators, logical operators, or conditional statements.
+
+6. **React DOM**: The code utilizes `ReactDOM.createRoot` to create a root for rendering the React application and `root.render(<AppLayout/>)` to render the root component (`AppLayout`) into the DOM.
+
+7. **Functional Components**: All the components in the provided code are functional components, which are simpler and more lightweight compared to class components in React.
+
+8. **Hooks**: Although not used in this particular code, React Hooks (like `useState`, `useEffect`, etc.) are essential for managing state and side effects in functional components.
+
+9. **Component Composition**: The `AppLayout` component demonstrates component composition by combining the `Header` and `Body` components to create the overall application layout.
+
+10. **Styling**: The code includes inline styles (e.g., `style={{ backgroundColor: "#BACD92" }}`) for styling components, although it's recommended to use CSS modules or styled components for better separation of concerns and maintainability.
+
+Overall, this code provides a solid foundation for understanding and working with React components, JSX syntax, rendering lists, and component composition.
+
+# Day 5 Let's get Hooked :
+
+## Website Structure :
+
+ 1. Header 
+ * logo
+ * Navigaion buttons
+
+ 2. Body
+
+    2.1 Search
+ 
+     2.2 Card Container (for restaurants)
+ *   Restaurant cards
+ *    - Image
+ *    - Name
+ *    - Rating
+ *    - Cuisine
+ *    - Delivery time
+
+ 3. Footer
+ * - Copyrights
+ * - Links
+ * - Address 
+ * - Contact info
+ 
+## What diffrence does .js vs .jsx make to the app ?
+
+The difference between naming files with `.js` and `.jsx` extensions in a React application is primarily a matter of convention and personal preference. It does not have any direct impact on the performance or bundling/packaging of the application.
+
+Here's a breakdown of the differences and implications:
+
+1. **File Extension Convention**:
+   - `.js` is the standard file extension for JavaScript files.
+   - `.jsx` is a conventional extension used specifically for files containing JSX (JavaScript XML) syntax, which is commonly used in React components.
+
+2. **Performance Impact**:
+   - The file extension itself does not affect the performance of your React application. Both `.js` and `.jsx` files are treated the same way by the React toolchain and bundlers.
+
+3. **Bundling and Packaging**:
+   - Modern bundlers like Webpack and Rollup can automatically handle both `.js` and `.jsx` files without any special configuration.
+   - During the bundling process, JSX code in `.jsx` files is transpiled (converted) to regular JavaScript by tools like Babel. This transpilation happens regardless of whether the file has a `.js` or `.jsx` extension.
+   - The bundlers and packagers treat both file extensions equally and do not differentiate between them in terms of bundling or packaging logic.
+
+4. **Code Editor Integration**:
+   - Some code editors and IDEs may provide better syntax highlighting, auto-completion, and other features for `.jsx` files since they can easily identify them as React components containing JSX syntax.
+   - However, most modern code editors can also recognize JSX syntax in `.js` files and provide similar features, although you may need to configure them accordingly.
+
+5. **Team Conventions**:
+   - The choice between `.js` and `.jsx` often comes down to team conventions and personal preferences.
+   - Some developers prefer using `.jsx` for files containing JSX syntax to make it more explicit that the file contains React components with JSX.
+   - Others prefer using `.js` for all JavaScript files, including those with JSX, to maintain consistency and avoid having multiple file extensions for the same language.
+
+In summary, while the `.jsx` extension is a convention specifically for React components with JSX syntax, using `.js` or `.jsx` does not have a direct impact on the performance or bundling/packaging of your React application. It's more a matter of personal preference, team conventions, and potentially better code editor integration when using the `.jsx` extension.
+
+## What are the two types of export/import ? 
+
+In React development, there are two main kinds of exports and imports: named exports/imports and default exports/imports.
+
+1. **Named Exports/Imports**:
+   - **Export**: With named exports, you can export multiple values (variables, functions, classes, etc.) from a module by explicitly naming them. Each named export is wrapped in `{}` brackets.
+   ```javascript
+   // Named exports
+   export const add = (a, b) => a + b;
+   export const subtract = (a, b) => a - b;
+   ```
+   - **Import**: When importing named exports, you must use the same names specified in the export statements.
+   ```javascript
+   // Importing named exports
+   import { add, subtract } from './math';
+   console.log(add(5, 3)); // Output: 8
+   console.log(subtract(5, 3)); // Output: 2
+   ```
+
+   **Use Cases**:
+   - When a module exports multiple values that need to be imported individually.
+   - When importing only specific values from a module to keep the code clean and readable.
+
+2. **Default Exports/Imports**:
+   - **Export**: With default exports, you can export only one value (variable, function, class, etc.) from a module as the default export. The default export is not wrapped in `{}` brackets.
+   ```javascript
+   // Default export
+   const greet = (name) => `Hello, ${name}!`;
+   export default greet;
+   ```
+   - **Import**: When importing a default export, you can name the imported value anything you want.
+   ```javascript
+   // Importing default export
+   import greeting from './greet';
+   console.log(greeting('John')); // Output: Hello, John!
+   ```
+
+   **Use Cases**:
+   - When a module exports a single value that represents the main functionality of the module.
+   - When importing a value that doesn't have a specific name or needs to be renamed for clarity.
+
+In summary, named exports are suitable for exporting multiple values from a module, while default exports are useful when exporting a single value as the main feature of the module. The choice between them depends on the structure and requirements of your application.
