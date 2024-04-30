@@ -2070,3 +2070,113 @@ In React development, there are two main kinds of exports and imports: named exp
    - When importing a value that doesn't have a specific name or needs to be renamed for clarity.
 
 In summary, named exports are suitable for exporting multiple values from a module, while default exports are useful when exporting a single value as the main feature of the module. The choice between them depends on the structure and requirements of your application.
+
+
+## What are react hooks ?
+
+React Hooks are functions that allow functional components in React to use state, lifecycle methods, and other React features without needing to write a class. They were introduced in React 16.8 to address some of the limitations of class components and to provide a more elegant way to manage state and side effects in functional components.
+
+Some key points about React Hooks:
+
+1. **State Hooks**: React provides the `useState` Hook to add state variables to functional components. This allows functional components to manage their own state without using a class.
+   ```javascript
+   import React, { useState } from 'react';
+
+   function Counter() {
+     const [count, setCount] = useState(0);
+
+     return (
+       <div>
+         <p>You clicked {count} times</p>
+         <button onClick={() => setCount(count + 1)}>
+           Click me
+         </button>
+       </div>
+     );
+   }
+   ```
+
+2. **Effect Hooks**: The `useEffect` Hook allows functional components to perform side effects such as data fetching, subscriptions, or manually changing the DOM after the component has rendered.
+   ```javascript
+   import React, { useState, useEffect } from 'react';
+
+   function Example() {
+     const [count, setCount] = useState(0);
+
+     useEffect(() => {
+       document.title = `You clicked ${count} times`;
+     });
+
+     return (
+       <div>
+         <p>You clicked {count} times</p>
+         <button onClick={() => setCount(count + 1)}>
+           Click me
+         </button>
+       </div>
+     );
+   }
+   ```
+
+3. **Custom Hooks**: Developers can create their own custom Hooks to extract component logic into reusable functions. This allows sharing of stateful logic between components without resorting to higher-order components or render props.
+   ```javascript
+   import { useState } from 'react';
+
+   function useInput(initialValue) {
+     const [value, setValue] = useState(initialValue);
+
+     function handleChange(event) {
+       setValue(event.target.value);
+     }
+
+     return [value, handleChange];
+   }
+
+   // Usage
+   function MyComponent() {
+     const [name, setName] = useInput('');
+     return <input value={name} onChange={setName} />;
+   }
+   ```
+
+React Hooks simplify the development of React applications by making functional components more powerful and easier to understand. They encourage better code organization, reusability, and composability. However, it's important to follow the rules of Hooks and understand their limitations to avoid potential issues.
+
+## How does the state variable update and keep the UI and data layer in sync explain ?
+
+In React, state variables are typically updated using functions provided by React, such as `useState` and `setState`. When a state variable is updated, React automatically triggers a re-render of the component in which the state variable is used. This re-rendering ensures that the UI reflects the updated state.
+
+Here's how the process works:
+
+1. **Initial State**: When a component is first rendered, React initializes its state variables to their initial values. This initial state is used to render the initial UI.
+
+2. **State Update**: When a state variable needs to be updated, you call the function provided by React to update that state variable. For example, if you're using the `useState` Hook, you call the setter function returned by `useState` to update the state variable.
+
+3. **Re-render**: After the state variable is updated, React schedules a re-render of the component. During the re-render, React compares the new virtual DOM with the previous virtual DOM to identify what has changed.
+
+4. **Virtual DOM Diffing**: React performs a process called "virtual DOM diffing" to determine which parts of the UI need to be updated. It identifies the differences between the new virtual DOM and the previous virtual DOM.
+
+5. **DOM Update**: Once React knows which parts of the UI need to be updated, it efficiently updates only those parts of the actual DOM. This process minimizes the number of DOM manipulations and ensures optimal performance.
+
+6. **UI Update**: The updated UI is now reflected in the browser, and the user sees the changes resulting from the state update.
+
+By automatically triggering re-renders and efficiently updating the DOM, React ensures that the UI stays in sync with the underlying data layer (i.e., the state). This declarative approach to UI development simplifies the process of building interactive and dynamic user interfaces.
+
+## What is diff algorithm and how is it used in React ?
+
+The "diffing" algorithm, also known as reconciliation, is a process used by React to efficiently update the user interface (UI) in response to changes in the application state. When the state of a React component changes, React needs to determine what changes need to be applied to the UI to reflect the new state.
+
+React achieves this by comparing the current state of the UI, represented as a virtual DOM tree, with the new state that needs to be rendered. The diffing algorithm identifies the differences between the two states and calculates the minimal set of changes required to update the UI efficiently.
+
+Here's how the diffing algorithm works in React:
+
+1. **Virtual DOM**: React maintains a lightweight, in-memory representation of the actual DOM known as the virtual DOM. This virtual DOM is a tree structure that mirrors the structure of the actual DOM but is much faster to manipulate.
+
+2. **Reconciliation**: When the state of a component changes, React re-renders the component and generates a new virtual DOM tree representing the updated UI.
+
+3. **Diffing**: React then compares the new virtual DOM tree with the previous one to identify the differences between them. It performs a tree-diffing algorithm to efficiently determine which parts of the UI have changed.
+
+4. **Minimal Updates**: Once the differences are identified, React calculates the minimal set of DOM operations needed to update the actual DOM to reflect the changes. Rather than re-rendering the entire UI, React only updates the parts of the DOM that have changed, resulting in better performance.
+
+5. **Batched Updates**: React may batch multiple updates together and perform them in a single pass to further optimize performance.
+
+By using the diffing algorithm, React minimizes the number of DOM manipulations required to update the UI, leading to better performance and a smoother user experience.
