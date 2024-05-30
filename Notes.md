@@ -343,6 +343,10 @@ const sum = (...args) => {
 
 Arrow functions are commonly used in modern JavaScript development, especially when writing functional programming-style code, working with arrays or objects, and defining callbacks or event handlers.
 
+
+
+
+
 # Day 2 Igniting the App:
 
 ### What is NPM?
@@ -2223,6 +2227,8 @@ In this example, the `config.js` file exports an object containing environment-s
 
 While the `config.js` file is a common pattern, its naming and structure can vary across projects and frameworks. Some projects may use different file names (e.g., `env.js`, `settings.js`) or organize configuration settings differently (e.g., using environment variables or external files like `.env`). The core idea remains the same: to provide a centralized and manageable way to handle application configuration.
 
+# Day 6 Exploring the world
+
 ## What is Monolith archietecture ? Explain ?
 
 Monolith architecture, also known as a monolithic application, is a traditional architectural pattern where the entire application is built and deployed as a single, indivisible unit. In a monolithic application, all components, modules, and services are tightly coupled and packaged together, forming a single, self-contained codebase.
@@ -2350,3 +2356,597 @@ Violating the Single Responsibility Principle can lead to classes or modules bec
 It's important to note that the Single Responsibility Principle is not always absolute, and there may be situations where a class or module needs to have multiple responsibilities. In such cases, it's essential to carefully evaluate the trade-offs and strive for a balance between separation of concerns and practical considerations, such as performance or code complexity.
 
 The Single Responsibility Principle is a fundamental guideline for writing clean, modular, and maintainable code, and it promotes the separation of concerns, which is a key principle in software design and architecture.
+
+## What is optional chaining in react?
+
+Optional chaining is a feature in JavaScript that allows you to safely access deeply nested properties of an object without having to check each intermediate property for existence. It is useful for dealing with objects that may have optional or missing properties, preventing runtime errors like `TypeError: Cannot read property 'foo' of undefined`.
+
+The optional chaining operator `?.` works by short-circuiting the evaluation if the value before the `?.` is `null` or `undefined`, and returns `undefined` instead of throwing an error.
+
+### Syntax
+
+The syntax for optional chaining is straightforward. It can be used with properties, methods, and array elements:
+
+```javascript
+object?.property
+object?.[property]
+object?.method?.()
+array?.[index]
+```
+
+### Examples
+
+1. **Accessing Nested Properties:**
+
+```javascript
+const user = {
+  name: 'Alice',
+  address: {
+    street: '123 Main St',
+    city: 'Wonderland'
+  }
+};
+
+console.log(user?.address?.street); // Output: '123 Main St'
+console.log(user?.address?.zipCode); // Output: undefined (instead of throwing an error)
+console.log(user?.contact?.email); // Output: undefined (instead of throwing an error)
+```
+
+2. **Calling Methods:**
+
+```javascript
+const user = {
+  name: 'Alice',
+  getName: function() {
+    return this.name;
+  }
+};
+
+console.log(user?.getName?.()); // Output: 'Alice'
+console.log(user?.getAge?.()); // Output: undefined (instead of throwing an error)
+```
+
+3. **Accessing Array Elements:**
+
+```javascript
+const users = [{ name: 'Alice' }, { name: 'Bob' }];
+
+console.log(users?.[0]?.name); // Output: 'Alice'
+console.log(users?.[2]?.name); // Output: undefined (instead of throwing an error)
+```
+
+### Use Cases
+
+1. **Handling API Responses:**
+
+When working with API responses, you often deal with data that may not be in the expected format. Optional chaining helps avoid errors when accessing properties that might not exist:
+
+```javascript
+fetch('/api/user')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data?.user?.profile?.email);
+  });
+```
+
+2. **Configuration Objects:**
+
+When accessing configuration options that may or may not be defined:
+
+```javascript
+const config = {
+  database: {
+    host: 'localhost',
+    port: 5432
+  }
+};
+
+const port = config?.database?.port ?? 3306; // Use default port 3306 if not defined
+console.log(port); // Output: 5432
+```
+
+3. **Component Properties in Frameworks:**
+
+In frameworks like React, optional chaining is useful for accessing component properties and state:
+
+```javascript
+const userProfile = props?.user?.profile;
+console.log(userProfile?.email);
+```
+
+### Conclusion
+
+Optional chaining is a powerful feature that simplifies the code for accessing deeply nested properties. It helps to make the code more readable and less error-prone, especially when dealing with optional or incomplete data structures.
+
+## What is a useEffect Hook ? 
+
+The `useEffect` hook is one of the most commonly used hooks in React. It allows you to perform side effects in functional components. Side effects are operations that interact with the outside world or affect the component's state or behavior in ways that are not purely based on its props and state. Examples of side effects include fetching data, directly manipulating the DOM, setting up subscriptions or timers, and logging.
+
+### Basic Usage
+
+The `useEffect` hook takes two arguments: a function containing the side-effect logic and an optional array of dependencies that control when the effect should be re-run.
+
+```javascript
+import React, { useEffect } from 'react';
+
+const MyComponent = () => {
+  useEffect(() => {
+    // Side-effect logic here
+    console.log('Component mounted or updated');
+
+    // Cleanup function (optional)
+    return () => {
+      console.log('Component will unmount or dependencies changed');
+    };
+  }, []); // Empty dependency array means this runs only on mount and unmount
+
+  return <div>My Component</div>;
+};
+```
+
+### Dependencies
+
+The second argument to `useEffect` is an array of dependencies. The effect will only re-run if one of the dependencies has changed between renders. If you omit this array, the effect will run after every render.
+
+- **Empty array `[]`:** The effect runs only once after the initial render and cleans up on unmount.
+- **No array:** The effect runs after every render.
+- **Array with dependencies:** The effect runs after the initial render and subsequently only when one of the dependencies changes.
+
+```javascript
+useEffect(() => {
+  // Logic to run on mount and when "prop1" or "prop2" change
+}, [prop1, prop2]);
+```
+
+### Cleanup
+
+If your effect returns a function, React will run that function to clean up the effect before the component unmounts or before the effect is re-run due to a change in dependencies. This is useful for cleaning up subscriptions, timers, or other resources that were set up in the effect.
+
+```javascript
+useEffect(() => {
+  const interval = setInterval(() => {
+    console.log('This runs every second');
+  }, 1000);
+
+  return () => {
+    clearInterval(interval);
+    console.log('Cleanup on unmount or dependencies change');
+  };
+}, []); // Runs only on mount and unmount
+```
+
+### Example: Fetching Data
+
+Here's an example of using `useEffect` to fetch data from an API when the component mounts:
+
+```javascript
+import React, { useEffect, useState } from 'react';
+
+const DataFetcher = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('https://api.example.com/data');
+      const result = await response.json();
+      setData(result);
+    };
+
+    fetchData();
+  }, []); // Empty array ensures this runs only once after the initial render
+
+  if (!data) return <div>Loading...</div>;
+
+  return (
+    <div>
+      <h1>Data:</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
+};
+
+export default DataFetcher;
+```
+
+### Summary
+
+- **Purpose:** `useEffect` is used to perform side effects in functional components.
+- **Dependencies:** The optional second argument controls when the effect runs. An empty array runs the effect only once, while an array with dependencies runs the effect when any dependency changes.
+- **Cleanup:** Return a function from the effect to clean up resources when the component unmounts or dependencies change.
+- **Common use cases:** Fetching data, subscribing to events, setting up timers, and manual DOM manipulations.
+
+`useEffect` simplifies the lifecycle management of side effects in functional components, making it easier to handle component side effects in a declarative way.
+
+## What is shimmer UI
+
+A Shimmer UI is a visual placeholder used in web and mobile applications to indicate that content is loading. Instead of showing blank spaces, the Shimmer UI provides a more engaging user experience by displaying placeholders that resemble the structure of the final content. These placeholders typically have a shimmering or pulsing animation to signify that the actual content is being loaded.
+
+### Key Features of Shimmer UI:
+
+1. **Visual Placeholder:** It mimics the shape of the content that is being loaded (e.g., text blocks, images, buttons).
+2. **Animated Effect:** A shimmer or skeleton animation runs across the placeholders to indicate loading activity.
+3. **Improved User Experience:** It gives users an immediate visual indication that content is on its way, reducing perceived loading times and keeping users engaged.
+
+### How to Implement Shimmer UI in React:
+
+Implementing a Shimmer UI in React can be done using CSS animations or libraries designed for this purpose. Here's a simple example using CSS:
+
+#### Step 1: Create the Shimmer Effect CSS
+
+```css
+/* shimmer.css */
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-text {
+  width: 100%;
+  height: 20px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.shimmer-image {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+```
+
+#### Step 2: Create a Shimmer Component
+
+```javascript
+// Shimmer.js
+import React from 'react';
+import './shimmer.css';
+
+const Shimmer = () => {
+  return (
+    <div className="shimmer-wrapper">
+      <div className="shimmer shimmer-image"></div>
+      <div className="shimmer shimmer-text"></div>
+      <div className="shimmer shimmer-text"></div>
+      <div className="shimmer shimmer-text"></div>
+    </div>
+  );
+};
+
+export default Shimmer;
+```
+
+#### Step 3: Use Shimmer Component in Your Main Component
+
+```javascript
+// App.js
+import React, { useState, useEffect } from 'react';
+import Shimmer from './Shimmer';
+
+const App = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    // Simulate data fetching
+    setTimeout(() => {
+      setData({
+        title: 'Loaded Content',
+        image: 'https://via.placeholder.com/400',
+        description: 'This is the loaded content description.',
+      });
+    }, 3000);
+  }, []);
+
+  if (!data) {
+    return <Shimmer />;
+  }
+
+  return (
+    <div>
+      <img src={data.image} alt={data.title} />
+      <h1>{data.title}</h1>
+      <p>{data.description}</p>
+    </div>
+  );
+};
+
+export default App;
+```
+
+### Libraries for Shimmer UI
+
+There are also libraries available that make it easier to implement Shimmer UI:
+
+- **react-content-loader:** This library provides customizable SVG content loaders.
+- **react-loading-skeleton:** Another popular library for creating skeleton screens.
+
+#### Example with `react-loading-skeleton`
+
+```bash
+npm install react-loading-skeleton
+```
+
+```javascript
+// App.js
+import React, { useState, useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+const App = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setData({
+        title: 'Loaded Content',
+        image: 'https://via.placeholder.com/400',
+        description: 'This is the loaded content description.',
+      });
+    }, 3000);
+  }, []);
+
+  if (!data) {
+    return (
+      <div>
+        <Skeleton height={200} />
+        <Skeleton count={3} />
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <img src={data.image} alt={data.title} />
+      <h1>{data.title}</h1>
+      <p>{data.description}</p>
+    </div>
+  );
+};
+
+export default App;
+```
+
+### Conclusion
+
+The Shimmer UI pattern enhances user experience by providing visual feedback that content is loading, which can be especially useful when dealing with slower network connections or large amounts of data. Implementing it in React is straightforward and can be done either through custom CSS or with the help of libraries designed for this purpose.
+
+
+## What is Conditional Rendering ?
+
+Conditional rendering is a technique used in web development frameworks like React to display content based on certain conditions. It allows you to create dynamic user interfaces that adapt to different situations.
+
+Here's how it works:
+
+1. **Conditional Statements:** You use conditional statements like `if`, `else if`, and ternary operators (`condition ? expressionIfTrue : expressionIfFalse`) within your component's JSX code.
+2. **Evaluation:** These statements evaluate to true or false based on the current state of your application or data.
+3. **Rendering Based on Condition:** Depending on the outcome of the evaluation, React decides which JSX elements to render on the screen.
+
+**Benefits of Conditional Rendering:**
+
+* **Improved User Experience:** By showing or hiding content based on user interactions or data availability, you can create a more intuitive and engaging interface.
+* **Code Reusability:** You can create reusable components that adapt their behavior based on conditions, reducing code duplication.
+* **Performance Optimization:** You can avoid rendering unnecessary components, improving the performance of your application.
+
+**Example:**
+
+Imagine you have a component displaying a product's details. You might use conditional rendering to:
+
+* Show a "Loading..." message if the product data hasn't been fetched yet.
+* Display a "Product Not Found" message if the product ID is invalid.
+* Render the product details (name, description, price) only if the product data is available.
+
+By effectively using conditional rendering, you can make your web applications more interactive, user-friendly, and performant.
+
+## What is the difference between JS expression and JS statement ?
+
+In JavaScript, expressions and statements are related but distinct concepts. The main difference between them lies in their purpose and how they are evaluated.
+
+**JavaScript Expression**:
+An expression is a construct that produces a value. It can be a combination of values, variables, operators, and function calls. Expressions are evaluated to produce a result or a value. Here are some examples of expressions in JavaScript:
+
+```javascript
+5 + 3       // 8 (arithmetic expression)
+x > 10      // true or false (boolean expression)
+'Hello' + ' World'  // "Hello World" (string expression)
+myFunction(x, y)  // returns the result of the function call
+```
+
+Expressions can be assigned to variables, used as arguments to function calls, or embedded within other expressions. Expressions in JavaScript can stand alone on a line, but they do not affect the control flow of the program.
+
+**JavaScript Statement**:
+A statement, on the other hand, is a complete instruction or action that performs a task and affects the control flow of the program. Statements are executed for their side effects, such as assigning a value to a variable, creating a loop, or defining a function. Here are some examples of statements in JavaScript:
+
+```javascript
+let x = 5;  // variable declaration and assignment
+if (x > 3) { /* ... */ }  // conditional statement
+for (let i = 0; i < 5; i++) { /* ... */ }  // loop statement
+function greet() { /* ... */ }  // function declaration
+```
+
+Statements are typically terminated with a semicolon (`;`) or by a line break. They can consist of expressions, but not all statements have expressions. For example, the `if` statement and the `function` declaration are statements that do not contain expressions directly.
+
+It's important to note that expressions can be part of statements, but not all statements are expressions. For example, the assignment statement `x = 5 + 3` contains the expression `5 + 3`, which is evaluated to produce the value `8` before being assigned to the variable `x`.
+
+In summary:
+
+- **Expression**: A construct that produces a value, used in assignments, function calls, or other expressions.
+- **Statement**: A complete instruction that performs an action and affects the control flow of the program.
+
+Expressions are evaluated to produce values, while statements are executed for their side effects and control the program's flow.
+
+## What is Conditional Rendering, explain with a code example ?
+
+Conditional rendering is a concept in React that allows you to render different components or elements based on a certain condition. This is useful when you need to display different user interfaces (UI) based on various factors, such as user authentication status, application state, or user input.
+
+In React, you can achieve conditional rendering using JavaScript operators like `if` statements, ternary operators, logical `&&` operator, or by using conditional rendering techniques provided by React itself, such as the `&&` operator or the conditional rendering with the `condition ? true : false` syntax.
+
+Here's an example using an `if` statement for conditional rendering:
+
+```jsx
+import React, { useState } from 'react';
+
+const ConditionalRendering = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
+  return (
+    <div>
+      {isLoggedIn ? (
+        <div>
+          <h1>Welcome, User!</h1>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <div>
+          <h1>Please log in</h1>
+          <button onClick={handleLogin}>Login</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ConditionalRendering;
+```
+
+In this example, we have a `ConditionalRendering` component that uses the `useState` hook to manage a `isLoggedIn` state. Depending on the value of `isLoggedIn`, the component will render different content.
+
+- If `isLoggedIn` is `true`, it will render a "Welcome, User!" message and a "Logout" button.
+- If `isLoggedIn` is `false`, it will render a "Please log in" message and a "Login" button.
+
+The conditional rendering is achieved using a ternary operator `isLoggedIn ? true : false`. If `isLoggedIn` is true, the part before the `:` is rendered. If `isLoggedIn` is false, the part after the `:` is rendered.
+
+You can also use the logical `&&` operator for conditional rendering, like this:
+
+```jsx
+{isLoggedIn && <div>Welcome, User!</div>}
+```
+
+In this case, the `<div>Welcome, User!</div>` will only be rendered if `isLoggedIn` is `true`.
+
+Conditional rendering is a powerful technique in React that allows you to create dynamic and responsive user interfaces based on various conditions and application states.
+
+## What is CORS?
+
+CORS (Cross-Origin Resource Sharing) is a security mechanism implemented by web browsers. It restricts web pages from making requests to a different domain than the one that served the web page. This is a security measure to prevent malicious websites from reading sensitive data from another site.
+
+When a web browser requests a resource (like an API) from a different domain, the server hosting the resource must include specific headers in the response to explicitly allow the cross-origin request. Without these headers, the browser will block the request to protect the user's data.
+
+Here's an example to illustrate CORS:
+
+1. A website `example.com` loads in the user's browser.
+2. The website's JavaScript code tries to fetch data from `api.example.org` (a different domain).
+3. The browser checks if the request is allowed based on the CORS policy.
+4. If the server `api.example.org` does not include the appropriate CORS headers in the response, the browser will block the request for security reasons.
+
+To allow cross-origin requests, the server needs to include certain headers in the response, such as:
+
+- `Access-Control-Allow-Origin`: This header specifies which origins (domains) are allowed to access the resource. It can be set to a specific domain, or `*` to allow all origins (not recommended for production).
+- `Access-Control-Allow-Methods`: This header specifies which HTTP methods (GET, POST, PUT, DELETE, etc.) are allowed for the request.
+- `Access-Control-Allow-Headers`: This header specifies which HTTP headers are allowed in the request.
+
+Here's an example of how a server can set CORS headers to allow cross-origin requests:
+
+```javascript
+// Node.js Express server
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://example.com');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+```
+
+In this example, the server allows requests from `https://example.com` and specifies the allowed HTTP methods and headers.
+
+CORS is a critical security mechanism that prevents unauthorized sharing of resources between different origins. It helps protect users' data and prevents malicious sites from accessing sensitive information. Web developers need to properly configure CORS on their servers to allow legitimate cross-origin requests while maintaining security.
+
+## What is async and await?
+
+`async` and `await` are two keywords in JavaScript that are used to work with asynchronous operations and handle promises in a more synchronous-like fashion. They were introduced in ECMAScript 2017 (ES8) and provide a more readable and straightforward syntax for working with asynchronous code compared to using traditional promise chains.
+
+**`async`**:
+The `async` keyword is used to define an asynchronous function. An asynchronous function is a function that operates asynchronously via the event loop, using an implicit promise to return its final value. The `async` keyword allows you to use the `await` keyword inside the function to wait for a promise to resolve before executing the next line of code.
+
+```javascript
+async function fetchData() {
+  // Code inside the async function can use the await keyword
+}
+```
+
+**`await`**:
+The `await` keyword can be used inside an `async` function to pause the execution of the function and wait for a promise to resolve. The `await` keyword will return the resolved value of the promise, allowing you to treat it as a standard synchronous operation. If the promise is rejected, the `await` expression will throw the rejection reason.
+
+```javascript
+async function fetchData() {
+  const response = await fetch('https://api.example.com/data');
+  const data = await response.json();
+  console.log(data);
+}
+```
+
+In the example above, the `await` keyword is used twice. First, it waits for the `fetch` promise to resolve, and then it waits for the `response.json()` promise to resolve, which converts the response body to JSON data.
+
+Here are some key points about `async` and `await`:
+
+- `await` can only be used inside an `async` function. Using it outside an `async` function will result in a syntax error.
+- When you `await` a promise, the execution of the `async` function is paused until the promise is resolved or rejected.
+- If the promise is rejected, the `await` expression will throw the rejection reason, which can be caught using a `try...catch` block.
+- Using `async/await` makes it easier to write sequential asynchronous code that looks and behaves more like synchronous code, improving readability and maintainability.
+- `async` functions always return a promise, even if you don't explicitly return a promise from the function.
+
+By using `async` and `await`, you can write more concise and readable asynchronous code without having to deal with complex promise chains or callback functions. This promotes better code organization and makes it easier to handle asynchronous operations, especially when dealing with multiple asynchronous tasks that depend on each other.
+
+## What is the use of `const json = await data.json();` in getRestaurants() ?
+
+The line `const json = await data.json();` in the context of the `getRestaurants` function likely refers to parsing the response data from the fetched API data.
+
+Here's an explanation of what's happening:
+
+1. The `data.json()` part is the method that extracts the JSON data from the API response.
+
+2. In the case where `getRestaurants` is a function that fetches restaurant data from an API, the response is expected to contain JSON data representing the restaurant information.
+
+3. By calling `data.json()` and assigning the result to the variable `json`, the code is extracting the JSON data from the response.
+
+4. The value assigned to the `json` variable is then used to access the restaurant data contained within the JSON format.
+
+Here's an example of how the `data.json()` part might work:
+
+```javascript
+function getRestaurants() {
+  // Make an API call to fetch restaurant data
+  fetch('https://api.example.com/restaurant-data')
+    .then((response) => {
+      // Assuming the response contains JSON data
+      const jsonData = response.json(); // Get the JSON data from the response
+      const restaurantData = jsonData.restaurants; // Access the restaurant data from the JSON object
+      // Do something with the restaurantData, e.9. populate the DOM element
+    })
+    .catch((error) => {
+      // Handle the case where the JSON data
+      // is missing or the API response contains a different data format
+    });
+}
+```
+
+In this context, calling `data.json()` allows you to access the JSON data that is retrieved from the API response, which is commonly used to populate data elements on a webpage or extract data in a developer-friendly format.
+
+The specifics of how the `data.json()` part works will depend on the actual implementation and structure of the JSON data being processed.
