@@ -6,7 +6,7 @@ const RestaurantCard = (props) => {
       resData?.info;
     const { deliveryTime } = resData?.info?.sla;
     return (
-      <div className="res-card" style={{ backgroundColor: "#BACD92" }}>
+      <div className="res-card">
         <div>
           <img
             className="resImg"
@@ -16,11 +16,11 @@ const RestaurantCard = (props) => {
             }
           ></img>
         </div>
-        <h3>{name}</h3>
-        <h4>{avgRating}</h4>
-        <h4>{costForTwo}</h4>
-        <h5>{cuisines.join(", ")}</h5>
-        <h5>{deliveryTime + " min"}</h5>
+        <h3 className="card-text">{name}</h3>
+        <h4 className="card-text">{avgRating}</h4>
+        <h4 className="card-text">{costForTwo}</h4>
+        <h5 className="card-text">{cuisines.join(", ")}</h5>
+        <h5 className="card-text">{deliveryTime + " min"}</h5>
       </div>
     );
 };

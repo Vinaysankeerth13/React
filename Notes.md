@@ -2950,3 +2950,27 @@ function getRestaurants() {
 In this context, calling `data.json()` allows you to access the JSON data that is retrieved from the API response, which is commonly used to populate data elements on a webpage or extract data in a developer-friendly format.
 
 The specifics of how the `data.json()` part works will depend on the actual implementation and structure of the JSON data being processed.
+
+# Day 7 Finding the path
+
+## What is the diffrence when we have and don't have a dependency array in useEffect hook in react and what diffrence does it make in rendering the component and also explain what happens when the array is empty and not empty also ?
+
+## Why is it that we should always call hooks in side the function in react ?
+
+## Why is it suggested that we not initialise hooks inside any kind of conditional statements ?
+
+## What is createBrowserRouter ?
+
+## What is RouterProvider ?
+
+## What is useRouteError ?
+
+## What does this line means : root.render(<RouterProvider router={appRouter} />); ?
+
+## What are children routes in react ?
+
+## What is link in react and how is it better than using anchor tags ?
+
+## What are the two types of Routing in Web Apps and how are they different ?
+
+## What does dynamic routing mean in react ?
