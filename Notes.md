@@ -3557,3 +3557,1181 @@ Client-side routing and server-side routing are two different approaches to hand
 In modern web development, a common approach is to combine both client-side and server-side rendering techniques. This is often referred to as "isomorphic" or "universal" rendering, where the initial page load is server-rendered for better SEO and performance, and subsequent navigation is handled client-side using client-side routing for a smoother user experience.
 
 The choice between client-side routing and server-side routing depends on the specific requirements of the web application, such as the need for complex user interactions, the importance of SEO, the performance constraints, and the development team's expertise and preferences.
+
+
+# Day 8 Let's get classy 
+
+## Define class based components in react ?
+
+In React, class-based components were the traditional way of creating reusable components before the introduction of functional components and hooks. A class-based component is a JavaScript class that extends the `React.Component` base class and defines its behavior using lifecycle methods and state management.
+
+Here's an example of a class-based component in React:
+
+```jsx
+import React, { Component } from 'react';
+
+class Counter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }
+
+  incrementCount = () => {
+    this.setState(prevState => ({
+      count: prevState.count + 1
+    }));
+  }
+
+  render() {
+    return (
+      <div>
+        <p>Count: {this.state.count}</p>
+        <button onClick={this.incrementCount}>Increment</button>
+      </div>
+    );
+  }
+}
+```
+
+Here's what's happening in this example:
+
+1. The `Counter` component is defined as a class that extends `React.Component`.
+2. Inside the `constructor` method, the initial state of the component is set using `this.state`.
+3. The `incrementCount` method is an arrow function that updates the component's state using `this.setState`.
+4. The `render` method is a required method that returns the JSX representing the component's UI. It can access the component's state via `this.state`.
+
+Class-based components have access to several lifecycle methods that allow you to hook into different phases of a component's lifecycle. Some of the commonly used lifecycle methods include:
+
+- `constructor`: Called before the component is mounted.
+- `render`: Required method that returns the component's UI.
+- `componentDidMount`: Called immediately after the component is mounted.
+- `componentDidUpdate`: Called immediately after an update occurs.
+- `componentWillUnmount`: Called immediately before the component is unmounted and destroyed.
+
+Class-based components also provide other features like error handling using the `componentDidCatch` lifecycle method and some performance optimization techniques like `shouldComponentUpdate`.
+
+With the introduction of React Hooks in version 16.8, functional components gained the ability to have state and lifecycle methods, making them a more modern and simpler approach to building components. However, class-based components are still supported in React and are commonly found in existing codebases. Understanding class-based components is essential for maintaining and working with legacy React codebases.
+
+## How do we use props in class based components ?
+
+In class-based components, props (short for properties) are used to pass data from a parent component to a child component. Props are immutable, which means they cannot be modified within the child component.
+
+Here's an example of how to use props in a class-based component:
+
+```jsx
+// Parent Component
+import React, { Component } from 'react';
+import ChildComponent from './ChildComponent';
+
+class ParentComponent extends Component {
+  render() {
+    const message = 'Hello from Parent';
+    return (
+      <div>
+        <h1>Parent Component</h1>
+        <ChildComponent message={message} />
+      </div>
+    );
+  }
+}
+
+export default ParentComponent;
+```
+
+```jsx
+// Child Component
+import React, { Component } from 'react';
+
+class ChildComponent extends Component {
+  render() {
+    const { message } = this.props; // Access the prop 'message'
+    return (
+      <div>
+        <h2>Child Component</h2>
+        <p>{message}</p> {/* Render the message prop */}
+      </div>
+    );
+  }
+}
+
+export default ChildComponent;
+```
+
+In this example:
+
+1. In the `ParentComponent`, we define a `message` variable and pass it as a prop to the `ChildComponent` using `<ChildComponent message={message} />`.
+2. In the `ChildComponent`, we access the `message` prop using `this.props.message`. However, a more modern and concise way is to use object destructuring: `const { message } = this.props;`.
+3. The `message` prop is then rendered inside the `ChildComponent`.
+
+You can pass any type of data (strings, numbers, objects, arrays, functions) as props to a child component. Props are read-only in the child component, meaning you cannot modify them directly within the child component.
+
+If you need to modify the data received from props, you should create a new state variable in the child component and update it based on the received props. This can be done in the `componentDidUpdate` lifecycle method or using the `getDerivedStateFromProps` static method (although `getDerivedStateFromProps` is considered a legacy pattern and should be avoided in most cases).
+
+Props are a fundamental way of passing data between components in React, enabling code reusability and separation of concerns. By passing data as props, you can create modular and reusable components that can be composed together to build complex user interfaces.
+
+## How do we create and use state variables in class based components ?
+
+In class-based components, you create and use state variables by defining them in the component's constructor method and updating them using the `setState` method.
+
+Here's an example of how to create and use state variables in a class-based component:
+
+```jsx
+import React, { Component } from 'react';
+
+class Counter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }
+
+  incrementCount = () => {
+    this.setState(prevState => ({
+      count: prevState.count + 1
+    }));
+  }
+
+  decrementCount = () => {
+    this.setState(prevState => ({
+      count: prevState.count - 1
+    }));
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Counter</h1>
+        <p>Count: {this.state.count}</p>
+        <button onClick={this.incrementCount}>Increment</button>
+        <button onClick={this.decrementCount}>Decrement</button>
+      </div>
+    );
+  }
+}
+
+export default Counter;
+```
+
+Here's what's happening in this example:
+
+1. In the `constructor` method, we initialize the component's state by assigning an object to `this.state`. In this case, we define a single state variable called `count` and set its initial value to `0`.
+
+2. We define two methods, `incrementCount` and `decrementCount`, which update the `count` state variable using the `setState` method.
+
+   - `this.setState` is the method provided by React to update the state of a component.
+   - We pass a callback function to `setState` that receives the previous state as an argument (`prevState`). This ensures that the state update is based on the most recent state value, even if multiple state updates are happening asynchronously.
+   - Inside the callback function, we return an object representing the new state, updating the `count` value by incrementing or decrementing it based on the previous state.
+
+3. In the `render` method, we access the `count` state variable using `this.state.count` and render it along with two buttons to increment and decrement the count.
+
+4. When the increment or decrement button is clicked, the corresponding method (`incrementCount` or `decrementCount`) is called, which updates the `count` state variable using `setState`. React will then re-render the component with the updated state.
+
+A few important points about state in class-based components:
+
+- State should be considered private and immutable, meaning you should never modify it directly (e.g., `this.state.count = 1` is not allowed).
+- When you call `setState`, React will merge the new state with the existing state and trigger a re-render of the component and its children.
+- You can pass an object or a function to `setState`. Using a function is recommended when the new state depends on the previous state, as in the example above.
+- State updates in React are asynchronous, so you should not rely on the updated state immediately after calling `setState`. Instead, you can use the optional second argument to `setState`, which is a callback function that will be called after the state update is complete.
+
+Managing state correctly is crucial for building interactive and dynamic user interfaces in React. While class-based components provide a way to manage state, functional components with hooks (e.g., `useState`) have become the preferred approach in modern React development due to their simplicity and improved code readability.
+
+## How can we update state variables in class based components ?
+
+In class-based components, you update state variables using the `setState` method provided by React. The `setState` method is used to trigger a re-render of the component whenever the state changes.
+
+Here's an example of how to update state variables in a class-based component:
+
+```jsx
+import React, { Component } from 'react';
+
+class Counter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }
+
+  incrementCount = () => {
+    // Option 1: Passing an object to setState
+    this.setState({ count: this.state.count + 1 });
+
+    // Option 2: Passing a callback function to setState
+    this.setState((prevState) => ({
+      count: prevState.count + 1
+    }));
+  }
+
+  decrementCount = () => {
+    this.setState((prevState) => ({
+      count: prevState.count - 1
+    }));
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Counter</h1>
+        <p>Count: {this.state.count}</p>
+        <button onClick={this.incrementCount}>Increment</button>
+        <button onClick={this.decrementCount}>Decrement</button>
+      </div>
+    );
+  }
+}
+
+export default Counter;
+```
+
+In this example, there are two ways to update the state using `setState`:
+
+1. **Passing an object to `setState`**:
+   - `this.setState({ count: this.state.count + 1 });`
+   - This approach is suitable when the new state value is independent of the previous state.
+
+2. **Passing a callback function to `setState`**:
+   - `this.setState((prevState) => ({ count: prevState.count + 1 }));`
+   - This approach is recommended when the new state value depends on the previous state.
+   - The callback function receives the previous state as an argument (`prevState`), allowing you to calculate the new state based on the previous state.
+   - This ensures that the state update is based on the most recent state value, even if multiple state updates are happening asynchronously.
+
+Here's how the component works:
+
+- In the `constructor`, the initial state is set with `count` set to `0`.
+- The `incrementCount` method has two options to update the state:
+  - Option 1: Passing an object `{ count: this.state.count + 1 }` to `setState`.
+  - Option 2: Passing a callback function `(prevState) => ({ count: prevState.count + 1 })` to `setState`.
+- The `decrementCount` method uses the callback function approach to decrement the `count` state.
+- In the `render` method, the current `count` value is displayed, and two buttons are rendered to increment and decrement the count.
+
+A few important points about updating state in class-based components:
+
+- Never modify the state directly (e.g., `this.state.count = 1` is not allowed). Always use `setState` to update the state.
+- When you call `setState`, React will merge the new state with the existing state and trigger a re-render of the component and its children.
+- State updates in React are asynchronous, so you should not rely on the updated state immediately after calling `setState`. Instead, you can use the optional second argument to `setState`, which is a callback function that will be called after the state update is complete.
+
+In modern React development, functional components with hooks (e.g., `useState`) have become the preferred approach for managing state due to their simplicity and improved code readability. However, understanding how to update state in class-based components is still essential for maintaining and working with legacy React codebases.
+
+## Why do we never update state variables directly in class based components ?
+
+We never update state variables directly in class-based components because it goes against the principles of React's state management and can lead to unexpected behavior and potential bugs in your application.
+
+In React, state represents the internal data of a component, and whenever the state changes, React re-renders the component and its children to ensure that the UI reflects the latest state. However, React's state update mechanism is designed to work in a specific way to ensure predictability and performance optimization.
+
+When you update state variables directly, like `this.state.count = 42`, React has no way of knowing that the state has changed, and therefore, it won't trigger a re-render of the component. This means that the component's UI will be out of sync with its internal state, leading to unexpected behavior and potential bugs.
+
+Instead of updating state variables directly, React provides the `setState` method, which is the proper way to update state in class-based components. When you call `setState`, React knows that the state has changed and will schedule a re-render of the component and its children, ensuring that the UI stays in sync with the updated state.
+
+Here are some key reasons why we should never update state variables directly in class-based components:
+
+1. **Unpredictable State Updates**: Updating state directly can lead to unpredictable state updates, especially when dealing with asynchronous operations or when multiple state updates are happening concurrently.
+
+2. **Potential for Bugs**: Directly modifying state variables can introduce subtle bugs that may be difficult to track down and fix, especially in larger applications with complex state management.
+
+3. **Performance Implications**: React's state update mechanism is optimized to batch multiple state updates together and perform a single re-render, improving performance. Updating state directly circumvents this optimization.
+
+4. **Violation of React's Principles**: Directly updating state violates React's principles of unidirectional data flow and immutable state, which are essential for building predictable and maintainable applications.
+
+To update state in class-based components, you should always use the `setState` method provided by React. This method ensures that state updates are handled correctly, triggers the necessary re-renders, and maintains the predictability and performance of your application.
+
+```jsx
+// Incorrect way (direct state update)
+this.state.count = 42;
+
+// Correct way (using setState)
+this.setState({ count: 42 });
+```
+
+By following React's recommended practices for state management, you can ensure that your application behaves as expected and avoid potential bugs and performance issues related to direct state updates.
+
+## Can we update individual state variable from the state variables object in class based components ?
+
+Yes, you can update individual state variables from the state object in class-based components using the `setState` method. React's `setState` method allows you to update the state object by providing either an object or a function as an argument.
+
+Here's an example of how to update individual state variables in a class-based component:
+
+```jsx
+import React, { Component } from 'react';
+
+class UserForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+    };
+  }
+
+  handleNameChange = (event) => {
+    this.setState({ name: event.target.value });
+  };
+
+  handleEmailChange = (event) => {
+    this.setState({ email: event.target.value });
+  };
+
+  handlePasswordChange = (event) => {
+    this.setState({ password: event.target.value });
+  };
+
+  render() {
+    const { name, email, password } = this.state;
+    return (
+      <form>
+        <input
+          type="text"
+          value={name}
+          onChange={this.handleNameChange}
+          placeholder="Name"
+        />
+        <input
+          type="email"
+          value={email}
+          onChange={this.handleEmailChange}
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={this.handlePasswordChange}
+          placeholder="Password"
+        />
+      </form>
+    );
+  }
+}
+```
+
+In this example, we have a `UserForm` component with a state object containing `name`, `email`, and `password` properties. We have separate event handlers (`handleNameChange`, `handleEmailChange`, and `handlePasswordChange`) for each input field.
+
+When an input field value changes, the corresponding event handler is called, and it updates the respective state variable using `this.setState({ stateVariable: value })`. For example, when the name input field value changes, `handleNameChange` is called, and it updates the `name` state variable using `this.setState({ name: event.target.value })`.
+
+By using `this.setState` and passing an object with the specific state variable to update, we can selectively update individual state variables without affecting the other state variables.
+
+Alternatively, you can also use a function as an argument to `setState`, which receives the previous state as a parameter and returns the new state object. This approach is useful when the new state depends on the previous state:
+
+```jsx
+handleNameChange = (event) => {
+  this.setState((prevState) => ({
+    name: event.target.value,
+    // Preserve other state variables
+    email: prevState.email,
+    password: prevState.password,
+  }));
+};
+```
+
+In this example, the `handleNameChange` function updates the `name` state variable while preserving the values of the `email` and `password` state variables from the previous state.
+
+By using `setState` and selectively updating individual state variables, you can maintain control over your component's state and ensure that only the necessary parts of the state are updated, which can lead to better performance and reduced re-rendering of components that depend on the unchanged state variables.
+
+## How is a react component mounted on to the webpage ?
+
+In React, a component is mounted onto the webpage by rendering it into a specific DOM element using the `ReactDOM.render()` method (or the `root.render()` method with React 18).
+
+Here's a typical workflow for mounting a React component onto a webpage:
+
+1. **Create the Root DOM Element**:
+   In your HTML file (e.g., `index.html`), you need to have a DOM element that will serve as the root container for your React application. This is typically a `<div>` element with a unique id, such as `root`.
+
+   ```html
+   <!DOCTYPE html>
+   <html>
+     <body>
+       <div id="root"></div>
+     </body>
+   </html>
+   ```
+
+2. **Import React and ReactDOM**:
+   In your JavaScript file (e.g., `index.js`), you need to import the `React` and `ReactDOM` (or `react-dom` for React 18 and later) libraries.
+
+   ```javascript
+   import React from 'react';
+   import ReactDOM from 'react-dom';
+   ```
+
+3. **Create the Root Component**:
+   Define your root React component, which will be the entry point for your application. This component can either be a functional component or a class-based component.
+
+   ```jsx
+   import React from 'react';
+
+   const App = () => {
+     return <div>Hello, World!</div>;
+   };
+
+   export default App;
+   ```
+
+4. **Render the Root Component**:
+   In your JavaScript file (e.g., `index.js`), import the root component and use `ReactDOM.render()` (or `root.render()` for React 18 and later) to render it into the root DOM element.
+
+   ```jsx
+   import React from 'react';
+   import ReactDOM from 'react-dom';
+   import App from './App';
+
+   // For React versions before 18
+   ReactDOM.render(<App />, document.getElementById('root'));
+
+   // For React 18 and later
+   import { createRoot } from 'react-dom/client';
+   const root = createRoot(document.getElementById('root'));
+   root.render(<App />);
+   ```
+
+   In this example, the `<App />` component is rendered into the DOM element with the id `root`.
+
+5. **Handle Updates and Re-renders**:
+   Once the root component is mounted, React takes care of efficiently updating and re-rendering the component and its children whenever the state or props change.
+
+That's the basic process of mounting a React component onto a webpage. When the application is loaded in the browser, the `ReactDOM.render()` (or `root.render()`) method will mount the root component into the specified DOM element, and React will manage the component tree and updates from there.
+
+It's important to note that in a production-ready application, you would typically use a build tool like Create React App, Vite, or Webpack to set up and optimize the development and production environments, including importing the necessary libraries and rendering the root component.
+
+## What is the life cycle of react class based component ?
+
+In React, class-based components have a lifecycle that consists of various methods that are automatically called at different stages of a component's lifetime. These lifecycle methods provide opportunities to perform actions at specific points in a component's lifecycle, such as when it is created, updated, or unmounted.
+
+Here are the main lifecycle methods in a React class-based component:
+
+1. **Mounting Phase**:
+   - `constructor(props)`: Called before the component is mounted. This is where you can initialize the component's state and bind event handlers.
+   - `static getDerivedStateFromProps(props, state)`: Called right before rendering the component, both on initial mount and on subsequent updates. It should return an object to update the state, or null to update nothing.
+   - `render()`: Required method that returns the elements that should be rendered.
+   - `componentDidMount()`: Called immediately after the component is mounted and the initial render is complete. This is where you can perform side effects like data fetching or setting up subscriptions.
+
+2. **Updating Phase**:
+   - `static getDerivedStateFromProps(props, state)`: Called right before rendering the component when new props or state are received. It should return an object to update the state, or null to update nothing.
+   - `shouldComponentUpdate(nextProps, nextState)`: Called before rendering when new props or state are received. You can return `false` to skip the re-render and improve performance.
+   - `render()`: Required method that returns the elements that should be rendered.
+   - `getSnapshotBeforeUpdate(prevProps, prevState)`: Called right before the changes from `render` are committed to the DOM. It allows capturing some information from the DOM before it's potentially changed.
+   - `componentDidUpdate(prevProps, prevState, snapshot)`: Called immediately after the component is updated and the new state or props are committed to the DOM. This is where you can perform side effects related to the update, such as updating a third-party library or fetching new data.
+
+3. **Unmounting Phase**:
+   - `componentWillUnmount()`: Called immediately before the component is unmounted and destroyed. This is where you can perform cleanup tasks, such as canceling network requests or clearing timers.
+
+4. **Error Handling**:
+   - `static getDerivedStateFromError(error)`: Called after an error has been thrown by a descendant component. It allows you to render a fallback UI after an error has been thrown.
+   - `componentDidCatch(error, errorInfo)`: Called after an error has been thrown by a descendant component. It allows you to log the error or display a fallback UI.
+
+Additionally, there are a few legacy lifecycle methods that are now deprecated in favor of newer lifecycle methods or hooks:
+
+- `componentWillMount()`: Use `constructor()` instead.
+- `componentWillReceiveProps(nextProps)`: Use `getDerivedStateFromProps()` or `componentDidUpdate()`.
+- `componentWillUpdate(nextProps, nextState)`: Use `getDerivedStateFromProps()` or `componentDidUpdate()`.
+- `componentWillUnmount()`: This method is still used for cleanup tasks.
+
+It's important to note that with the introduction of React Hooks in version 16.8, functional components can now manage state and lifecycle events without the need for class-based components. However, understanding the lifecycle methods of class-based components is still valuable for maintaining and working with existing codebases that use them.
+
+## What is componentDidMount and why is it used ? 
+
+`componentDidMount` is a lifecycle method in React class-based components. It is called immediately after a component is mounted (inserted into the DOM tree). This is typically the best place to initiate network requests or perform any side-effects that need to be executed once the component is rendered.
+
+Here are some common use cases for `componentDidMount`:
+
+1. **Fetching Data from an API**: Since `componentDidMount` is called after the component is rendered, it is a suitable place to initiate network requests to fetch data from an API or a remote server. This ensures that the component is already rendered before making the network request, preventing unnecessary re-renders.
+
+```jsx
+componentDidMount() {
+  fetch('/api/data')
+    .then(response => response.json())
+    .then(data => this.setState({ data }));
+}
+```
+
+2. **Setting up Subscriptions**: If your component needs to subscribe to a data source or an event, `componentDidMount` is the ideal place to set up the subscription. This ensures that the subscription is active only when the component is mounted and avoids potential memory leaks.
+
+```jsx
+componentDidMount() {
+  window.addEventListener('resize', this.handleResize);
+}
+```
+
+3. **Interacting with Browser APIs**: If your component needs to interact with browser APIs like the Geolocation API, WebSockets, or Web Workers, `componentDidMount` is a suitable place to initialize and set up these APIs.
+
+```jsx
+componentDidMount() {
+  navigator.geolocation.getCurrentPosition(this.handleGeolocation);
+}
+```
+
+4. **Setting Up Third-Party Libraries**: If your component uses third-party libraries that need to be initialized or configured, `componentDidMount` is a good place to do so, as it ensures that the component has been rendered before the library is set up.
+
+```jsx
+componentDidMount() {
+  const map = new google.maps.Map(this.mapRef.current, { /* config */ });
+}
+```
+
+5. **Starting Timers or Intervals**: If your component needs to set up timers or intervals for periodic updates or animations, `componentDidMount` is the appropriate place to start them.
+
+```jsx
+componentDidMount() {
+  this.interval = setInterval(this.updateTime, 1000);
+}
+```
+
+It's important to note that any side-effects or subscriptions set up in `componentDidMount` should be cleaned up in the `componentWillUnmount` lifecycle method to prevent memory leaks or unwanted side-effects when the component is unmounted.
+
+By using `componentDidMount`, you can ensure that your component is fully rendered and ready to interact with external data sources, APIs, or perform any necessary setup operations without causing unnecessary re-renders or state updates.
+
+## What is react life cycle method ? Explain and give me an image ?
+
+In React, the lifecycle of a component refers to the series of methods that are automatically called at different stages of a component's existence. These lifecycle methods provide developers with opportunities to perform actions or introduce side effects at specific points in a component's lifecycle.
+
+Here's an image that illustrates the lifecycle methods of a React component:
+
+```
+                 ┌────────────────────┐
+                 │ Mounting           │
+                 └───────┬─────────────┘
+                         │
+          ┌───────────────┴───────────────┐
+          │                               │
+┌─────────┴─────────┐           ┌─────────┴─────────┐
+│   constructor     │           │ static            │
+│   static          │           │ getDerivedStateFromProps
+│   getDerivedStateFromProps    │                   │
+│   render          │           │ render            │
+│   componentDidMount           │ shouldComponentUpdate  │
+└─────────┬─────────┘           └─────────┬─────────┘
+          │                               │
+          │                   ┌───────────┴───────────┐
+          │                   │         Updating      │
+          │                   └───────────┬───────────┘
+          │                               │
+          │                   ┌───────────┴──────────────┐
+          │                   │                           │
+          │                   │   getSnapshotBeforeUpdate│
+          │                   │   componentDidUpdate     │
+          │                   └──────────────────────────┘
+          │  
+          │                   ┌─────────┐
+          │                   │Unmounting
+          └───────────────────┼─────────┘
+                              │
+                           componentWillUnmount
+                              │
+                              │
+                   ┌───────────┴───────────┐
+                   │        Error Handling  │
+                   └───────────┬───────────┘
+                               │
+                   ┌───────────┴───────────┐
+                   │       getDerivedStateFromError
+                   │        componentDidCatch
+                   └──────────────────────┘
+```
+
+Here's an explanation of the different lifecycle phases:
+
+1. **Mounting**: This phase occurs when an instance of a component is being created and inserted into the DOM. The lifecycle methods involved in this phase are:
+   - `constructor()`: Called before the component is mounted.
+   - `static getDerivedStateFromProps()`: Called right before rendering the component.
+   - `render()`: Required method that returns the elements to be rendered.
+   - `componentDidMount()`: Called immediately after the component is mounted.
+
+2. **Updating**: This phase occurs when a component is being re-rendered due to changes in props or state. The lifecycle methods involved in this phase are:
+   - `static getDerivedStateFromProps()`: Called right before rendering the component.
+   - `shouldComponentUpdate()`: Called before rendering the component when new props or state are received. You can return `false` to skip the re-render and improve performance.
+   - `render()`: Required method that returns the elements to be rendered.
+   - `getSnapshotBeforeUpdate()`: Called right before the changes from `render` are committed to the DOM.
+   - `componentDidUpdate()`: Called immediately after the component is updated and the new state or props are committed to the DOM.
+
+3. **Unmounting**: This phase occurs when a component is being removed from the DOM. The lifecycle method involved in this phase is:
+   - `componentWillUnmount()`: Called immediately before the component is unmounted and destroyed.
+
+4. **Error Handling**: This phase occurs when an error is thrown in a component. The lifecycle methods involved in this phase are:
+   - `static getDerivedStateFromError()`: Called after an error has been thrown by a descendant component.
+   - `componentDidCatch()`: Called after an error has been thrown by a descendant component.
+
+It's important to note that with the introduction of React Hooks in version 16.8, functional components can now manage state and lifecycle events without the need for class-based components. However, understanding the lifecycle methods of class-based components is still valuable for maintaining and working with existing codebases that use them.
+
+## Explain the life cycle of the code in UserClass.js in detail ?
+
+Sure, here is a detailed explanation of the code's lifecycle:
+
+**1. Initialization**
+
+The code execution begins with the `UserClass` component being instantiated. The constructor is invoked first, and it takes props (properties) passed to the component as arguments. Here, the constructor calls the `super(props)` method to initialize the parent `React.Component` class. Then, it sets the initial state of the component using the `this.state` keyword. The state is an object that holds data specific to the component. In this case, the state object contains a `userInfo` property with an initial value of `{ name: "Dummy", location: "Default" }`.
+
+**2. Mounting**
+
+Once the component is initialized, React calls the `componentDidMount` lifecycle method. This method is invoked only once after the component has been successfully rendered on the DOM. Inside the `componentDidMount` method, an asynchronous function is used to fetch data from an external API (`https://api.github.com/users/vinaysankeerth13`). The `fetch` function returns a Promise that resolves with a Response object. The `Response.json()` method is then called to parse the JSON data from the response.
+
+**3. Updating**
+
+After the data is fetched successfully, the `setState` method is used to update the component's state with the new data. The `setState` method triggers a re-render of the component. Inside the `setState` function, the `userInfo` property of the state is updated with the fetched JSON data.
+
+**4. Rendering**
+
+The `render` method is responsible for returning the JSX that represents the component's UI. React calls the `render` method whenever the component's state or props change. The `render` method in this example destructures the `name`, `location`, and `email` properties from the `userInfo` state object. It then returns JSX that represents a user card with the fetched user information.
+
+**5. Re-rendering (if necessary)**
+
+If the state or props of the component change, React will re-render the component. The re-rendering process involves calling the `componentDidMount` lifecycle method again (only if the component has not been mounted before), followed by the `render` method. The re-rendered JSX is then compared to the previous JSX, and React updates the DOM accordingly.
+
+**In summary,**
+
+The code's lifecycle follows a specific pattern: initialization, mounting, updating, rendering, and re-rendering (if necessary). This lifecycle pattern is essential for React components to function correctly and update their UI dynamically.
+
+## How diffrent are componentDidMount and useEffect wrt react life cycle?
+
+Both `componentDidMount` and `useEffect` are used to manage side effects in React components, but they differ in functionality and usage. Here's a breakdown of their key differences:
+
+**componentDidMount (Class Components):**
+
+* **Invoked:** Only once, immediately after a component is mounted (inserted into the DOM).
+* **Use Case:** Ideal for side effects that need to run **only once** after the initial render, such as data fetching, subscriptions, or DOM manipulation.
+* **No Dependency Array:** Doesn't have a dependency array to control when it runs.
+* **Limitations:** Can be difficult to manage side effects that need to run conditionally or on multiple occasions.
+
+**useEffect (Functional Components):**
+
+* **Invoked:** Can be called multiple times during a component's lifecycle. This depends on the function passed to `useEffect` and the dependency array.
+* **Use Case:** More versatile, can be used for various side effects like data fetching, subscriptions, DOM manipulation, and running logic based on state or prop changes.
+* **Dependency Array (Optional):** An optional array passed as the second argument to `useEffect`. It controls when the effect function runs. If the dependency array is empty (`[]`), the effect runs only after the initial render (similar to `componentDidMount`). If the array includes state or prop values, the effect runs whenever those values change.
+* **Cleanup Function (Optional):** Allows you to return a cleanup function from `useEffect`. This function is executed before the component unmounts or before the effect runs again if the dependencies change. This is useful for cleaning up subscriptions, timers, or other resources created inside the effect.
+
+Here's a table summarizing the key differences:
+
+| Feature        | componentDidMount   | useEffect                                     |
+|--------------- |-------------------- |-----------------------------------------------|
+| Component Type | Class Components    | Functional Components                         |
+| Invoked        | Once after mount    | Can be called multiple times                  |
+| Dependency Array| N/A                | Controls when effect runs (optional)          |
+| Use Cases      | One-time side effects | Various side effects, conditional logic     |
+| Cleanup        | No                  | Optional cleanup function                     |
+
+In general, `useEffect` is considered a more flexible and powerful approach for managing side effects in React, especially for functional components. It allows for better control over when effects run and provides a way to clean up resources. However, if you're working with class components and only need a simple side effect after the initial render, `componentDidMount` can still be a valid option.
+
+
+## How is the life cycle of a react funtional component different from Class based components ?
+
+The lifecycle of React functional components and class-based components differ primarily due to the introduction of hooks like `useEffect`. Here's a breakdown of the key differences:
+
+**Class-based Components:**
+
+* **Lifecycle Methods:** Class components rely on built-in lifecycle methods like `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount` to perform actions at specific stages of the component's lifecycle. These methods provide a structured way to handle things like data fetching, subscriptions, and DOM manipulation.
+
+**Functional Components:**
+
+* **Limited Built-in Lifecycle:** Functional components traditionally lacked built-in lifecycle methods. They were considered "stateless" as they couldn't manage state or directly leverage lifecycle methods.
+* **Hooks to the Rescue:** With the introduction of hooks (`useState`, `useEffect`, etc.), functional components gained the ability to manage state and perform side effects similar to class components.
+* **useEffect as a Versatile Tool:** The `useEffect` hook allows functional components to mimic class-based lifecycle behavior. You can control when the effect runs by providing a dependency array. An empty dependency array (`[]`) replicates `componentDidMount` behavior (running only after initial render). Including state or props in the array triggers the effect whenever those values change.
+
+**Key Differences in Lifecycle Management:**
+
+* **Structure:** Class components offer a more structured approach with dedicated lifecycle methods. Functional components with hooks require building the logic within the `useEffect` hook.
+* **Flexibility:** `useEffect` offers greater flexibility because you can define when the effect runs based on dependencies. Class-based lifecycle methods have a fixed execution order.
+* **Readability:** Some argue that class components with lifecycle methods can be easier to read for developers familiar with traditional object-oriented programming. Functional components with hooks might require a slightly different mindset, but many find them cleaner and more concise.
+
+**In Summary:**
+
+While both component types can achieve the same functionality, the approach differs. Class components rely on pre-defined lifecycle methods, while functional components with hooks offer more flexibility and control over when side effects occur. The choice between them depends on project needs, developer preferences, and team familiarity.
+
+
+## How do we unmount a function component that has a useEffect hook ?
+
+Function components don't have a direct equivalent to the `componentWillUnmount` lifecycle method from class components. However, you can achieve similar functionality using the cleanup function returned from the `useEffect` hook.
+
+Here's how to unmount a functional component with `useEffect`:
+
+1. **Define the Cleanup Function:** Inside the `useEffect` function, return a function that will be executed when the component is about to unmount. This cleanup function is responsible for cleaning up any resources or subscriptions created within the effect.
+
+2. **Example:**
+
+```javascript
+import React, { useEffect } from "react";
+
+function MyComponent() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    // Side effect logic (e.g., fetch data)
+    const fetchData = async () => {
+      const response = await fetch("https://api.example.com/data");
+      const jsonData = await response.json();
+      setData(jsonData);
+    };
+    fetchData();
+
+    // Cleanup function to unsubscribe from any subscriptions or clear timers
+    return () => {
+      // Perform cleanup logic here (e.g., unsubscribe from subscriptions)
+    };
+  }, []); // Empty dependency array ensures effect runs only on mount
+
+  // ... rest of your component logic
+
+  return (
+    <div>
+      {/* Display data */}
+    </div>
+  );
+}
+```
+
+In this example:
+
+* The `useEffect` hook fetches data and sets the state.
+* The empty dependency array `[]` ensures the effect runs only after the initial render.
+* The returned cleanup function is empty in this example, but it's where you would typically place any cleanup logic, such as unsubscribing from event listeners or timers created within the effect.
+
+**When the component unmounts,** React will call the cleanup function before removing the component from the DOM. This allows you to perform any necessary cleanup tasks to avoid memory leaks or unexpected behavior.
+
+**Additional Considerations:**
+
+* If the `useEffect` has dependencies (e.g., state variables), the cleanup function will only be called when those dependencies change, triggering a re-run of the effect.
+* Make sure your cleanup function doesn't rely on component state or props, as these might not be available during the unmount process.
+
+By implementing cleanup functions in `useEffect`, you can effectively manage the lifecycle of functional components and prevent potential issues during unmounting.
+
+## What is the use of return in useEffect hook ?
+
+The `return` statement in the `useEffect` hook of React serves a crucial purpose: **it allows you to define a cleanup function**. This cleanup function is essential for managing side effects and preventing memory leaks or unexpected behavior in your components.
+
+Here's a breakdown of its functionality:
+
+**What the `useEffect` Hook Does:**
+
+* The `useEffect` hook is used to perform side effects in functional components. These side effects can include data fetching, subscriptions, timers, or any other logic that interacts with external resources.
+* It takes two arguments:
+    * **Effect Function:** This function contains the actual side effect logic.
+    * **Dependency Array (Optional):** An array of dependencies that controls when the effect function runs. If the dependency array is empty (`[]`), the effect runs only after the initial render (similar to `componentDidMount` in class components). If it includes state or prop values, the effect runs whenever those values change.
+
+**Why Cleanup Matters:**
+
+* When side effects involve external resources like subscriptions, event listeners, or timers, it's important to clean them up when the component is no longer needed (unmounted). Leaving them uncleaned can lead to memory leaks and unexpected behavior.
+
+**The Role of the Cleanup Function:**
+
+* The `return` statement in `useEffect` allows you to define a function that will be executed before the component unmounts or before the effect runs again if the dependencies change.
+* This cleanup function provides a designated space to perform any necessary tasks to clean up the side effects created within the effect function. This might involve:
+    * Unsubscribing from subscriptions (e.g., WebSockets, event listeners)
+    * Clearing timers (e.g., `setInterval`, `setTimeout`)
+    * Cancelling pending data fetches
+    * Releasing any other resources held by the effect
+
+**Example:**
+
+```javascript
+import React, { useEffect } from "react";
+
+function MyComponent() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCount(count + 1);
+    }, 1000);
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [count]); // Dependency array ensures effect runs only when count changes
+
+  return (
+    <div>
+      You clicked {count} times
+    </div>
+  );
+}
+```
+
+In this example:
+
+* The `useEffect` hook creates a timer that increments the `count` state every second.
+* The `return` statement defines a cleanup function that clears the timer interval using `clearInterval` when the component unmounts.
+
+By using the cleanup function, you ensure that the timer is properly stopped when the component is no longer needed, preventing memory leaks and unexpected behavior.
+
+**In summary,** the `return` statement in `useEffect` is essential for responsible side effect management in React functional components. It allows you to define cleanup functions that guarantee proper resource management and prevent potential issues during component unmounting.
+
+## Why do we use constructor(props) and super(props) ?
+
+In React class components, `constructor(props)` and `super(props)` are used together to handle property initialization and ensure proper inheritance behavior. Here's a breakdown of their individual purposes and why they're used together:
+
+**1. constructor(props):**
+
+* The `constructor` is a special method in JavaScript classes that is invoked automatically when you create an instance of the class.
+* In React class components, the `constructor` is often used to initialize the component's state. You can access the `props` argument passed to the component within the constructor. 
+* By assigning `props` to `this.props` inside the constructor, you make the component's properties accessible throughout the component using `this.props`.
+
+**2. super(props):**
+
+* The `super` keyword is used to call the constructor of the parent class. 
+* In React, most components inherit from the base `React.Component` class. When you define a constructor in your child class, you typically want to call the parent class's constructor as well.
+* `super(props)` achieves this by calling the `constructor` of the parent class (`React.Component`) and passing the `props` argument to it. This ensures that the parent class's initialization logic is also executed, which might involve setting up its own state or performing other necessary actions.
+
+**Why Use Them Together?**
+
+* By using `constructor(props)` and `super(props)` together, you achieve two important things:
+    * **Initialize component state:** You can define the initial state of your component using `this.state` within the constructor.
+    * **Ensure proper inheritance:** You call the parent class's constructor using `super(props)`, allowing the child component to inherit properties and behavior from the parent class.
+
+**Here's an example to illustrate their usage:**
+
+```javascript
+class User extends React.Component {
+  constructor(props) {
+    super(props); // Call parent constructor (React.Component)
+    this.state = {
+      name: this.props.name || "Default User", // Use props or default value
+    };
+  }
+
+  // ... rest of the component logic
+}
+```
+
+In this example:
+
+* The `constructor` calls the parent class's constructor (`super(props)`) to ensure proper inheritance.
+* It then defines the initial state of the component (`this.state`) using the `name` prop (if provided) or a default value.
+
+**In summary,** `constructor(props)` and `super(props)` are used together in React class components to manage property initialization and ensure proper inheritance from the parent class. This combination lays the foundation for your component's state and behavior.
+
+**Additional Notes:**
+
+* While `constructor(props)` is commonly used for state initialization, it's not strictly necessary if you don't have state to manage in your component.
+* In modern React development, functional components with hooks (like `useState`) are often preferred over class components due to their simplicity and flexibility. However, understanding `constructor(props)` and `super(props)` remains valuable if you encounter existing class-based components or want a deeper understanding of React's underlying mechanisms.
+
+## What is the use of Async componentsDidMount ?
+
+I'd be glad to explain the use of `async componentDidMount` in React components:
+
+**Purpose:**
+
+- `async componentDidMount` is a technique used in React class components to perform asynchronous operations (like data fetching) after the component has successfully mounted (inserted) into the DOM.
+- By making `componentDidMount` `async`, you can write cleaner and more readable code using `await` to pause execution until the asynchronous operation completes.
+
+**Functionality:**
+
+1. **Component Mounting:** When a React component is created, the `constructor` is invoked first, followed by `componentDidMount` **after** the component is rendered in the DOM.
+2. **Async Operation:** Inside `async componentDidMount`, you can use `await` with asynchronous functions like `fetch` to retrieve data from an API or perform other actions that take time. The `await` keyword pauses execution of the `componentDidMount` method until the asynchronous operation finishes.
+3. **State Update:** Once the data is successfully fetched, you can update the component's state using `this.setState` to reflect the new information. This triggers a re-render of the component, displaying the updated data in the UI.
+
+**Example:**
+
+```javascript
+import React, { Component } from 'react';
+
+class User extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userInfo: {
+        name: 'Dummy',
+        location: 'Default',
+      },
+    };
+  }
+
+  async componentDidMount() {
+    try {
+      const response = await fetch('https://api.github.com/users/vinaysankeerth13');
+      const json = await response.json();
+      this.setState({ userInfo: json });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
+
+  render() {
+    const { name, location, email } = this.state.userInfo;
+    return (
+      <div className="user-card">
+        <h4>Name: {name}</h4>
+        <h4>Location: {location}</h4>
+        <h5>Email: {email}</h5>
+      </div>
+    );
+  }
+}
+
+export default User;
+```
+
+**Advantages:**
+
+- **Readability:** Using `async/await` makes the code for asynchronous operations in `componentDidMount` more concise and easier to follow.
+- **Error Handling:** You can include a `try...catch` block to handle potential errors during the asynchronous operation, preventing the component from crashing.
+
+**Disadvantages:**
+
+- **Limited to Class Components:** `async componentDidMount` is only applicable to React class components. Functional components with hooks (like `useEffect`) are often preferred in modern React development due to their simplicity and flexibility.
+- **Legacy Lifecycle Methods:** While `async/await` improves readability, there's an ongoing shift towards using functional components and hooks like `useEffect` for side effects, including data fetching.
+
+**In Summary:**
+
+While `async componentDidMount` can be useful for handling asynchronous operations in class-based React components, it's generally recommended to consider using functional components with hooks (`useEffect`) for managing side effects in modern React development. Hooks provide a more declarative and flexible approach for this purpose.
+
+## How do you create Nested Routes react-router-dom cofiguration ?
+
+Here's how to create nested routes in React Router DOM (version 6):
+
+**1. Import Necessary Components:**
+
+```javascript
+import { Routes, Route } from 'react-router-dom';
+```
+
+**2. Define Parent and Child Components:**
+
+Create separate React components for your parent and child routes. These components will typically render UI elements specific to their role in the hierarchy.
+
+**3. Set Up Nested Routes:**
+
+Nest the child route(s) within the `Route` component of the parent route. Here's the key part:
+
+```javascript
+function ParentRoute() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />  {/* Parent Route */}
+      <Route path="/products" element={<Products />}> {/* Parent Route */}
+        <Route path="/products/:productId" element={<ProductDetails />} /> {/* Nested Child Route */}
+      </Route>
+      {/* Other routes for the parent */}
+    </Routes>
+  );
+}
+```
+
+**Explanation:**
+
+- The parent route (`ParentRoute`) uses the `Routes` component to define child routes.
+  - The first two routes (`"/"`, `/products`) are parent routes themselves.
+  - The third route (`"/products/:productId"`) is nested within the `/products` parent route.
+- The `element` prop in each `Route` specifies the component to render for that route.
+  - The nested child route includes a URL parameter (`/:productId`) that can be accessed in the `ProductDetails` component using `useParams`.
+
+**4. Using the `Outlet` Component:**
+
+- The parent component can optionally use the `Outlet` component to render the content of nested child routes. This is particularly useful when the parent route has its own UI elements and needs to integrate the child route's content seamlessly.
+
+```javascript
+function Products() {
+  return (
+    <div>
+      <h2>Products List</h2>
+      <Outlet /> {/* Outlet to render nested child route content */}
+      <button>Add New Product</button>
+    </div>
+  );
+}
+```
+
+**5. Accessing URL Parameters:**
+
+- In nested child components, you can access URL parameters using the `useParams` hook from `react-router-dom`:
+
+```javascript
+import { useParams } from 'react-router-dom';
+
+function ProductDetails() {
+  const { productId } = useParams();
+
+  // Use productId to fetch product details or display information
+  return (
+    <div>
+      <h2>Product Details: {productId}</h2>
+      {/* ... */}
+    </div>
+  );
+}
+```
+
+**Additional Considerations:**
+
+- You can define multiple nested routes within a parent route, creating a hierarchy of routes.
+- Consider using `index` prop on nested routes to handle the parent route's base path (e.g., `/products/`):
+
+```javascript
+<Route path="/products" element={<Products />}>
+  <Route index element={<ProductList />} /> {/* Renders at /products */}
+  <Route path="/products/:productId" element={<ProductDetails />} />
+</Route>
+```
+
+By following these steps and understanding the concepts of parent and child routes, `Outlet`, and URL parameters, you can effectively create nested routing structures in your React applications using React Router DOM v6.
+
+## createHashRouter, createMemoryRouter from React Router ?
+
+I'd be glad to explain `createHashRouter` and `createMemoryRouter` from React Router (version 6):
+
+**createHashRouter:**
+
+- **Purpose:** Creates a router instance that uses the hash portion (`#`) of the URL to manage routing. This is useful when deploying your React application to a static file server that doesn't support clean URLs (URL rewriting).
+- **How it Works:** When using `createHashRouter`, any navigation within your application will update the hash fragment of the URL (e.g., `http://localhost:3000/#/products`). This allows the router to track the current route without modifying the server-side routing configuration.
+
+**Example:**
+
+```javascript
+import { createHashRouter, Routes, Route } from 'react-router-dom';
+
+const MyHashRouter = createHashRouter();
+
+function App() {
+  return (
+    <MyHashRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        {/* Other routes */}
+      </Routes>
+    </MyHashRouter>
+  );
+}
+```
+
+**Considerations:**
+
+- While `createHashRouter` offers a workaround for static file servers, it's generally considered less user-friendly compared to clean URLs (without the hash). This is because search parameters (everything after the `?`) in the URL might be misinterpreted by the router.
+- If you have control over your server configuration, it's recommended to set up server-side routing for a more seamless user experience.
+
+**createMemoryRouter:**
+
+- **Purpose:** Creates a router instance that manages routing entirely in memory. This is primarily used for unit testing React components that rely on routing behavior.
+- **How it Works:** `createMemoryRouter` doesn't interact with the browser's URL or history stack. It simulates routing within your test environment, allowing you to test component behavior for different routes and navigation events.
+
+**Example:**
+
+```javascript
+import { createMemoryRouter, Routes, Route } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
+
+const MyMemoryRouter = createMemoryRouter();
+
+function MyComponent() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/products" element={<Products />} />
+    </Routes>
+  );
+}
+
+test('displays "Home" content on root path', () => {
+  render(<MyMemoryRouter><MyComponent /></MyMemoryRouter>);
+  expect(screen.getByText('Home')).toBeInTheDocument();
+});
+```
+
+**Considerations:**
+
+- `createMemoryRouter` is essential for isolated testing of routing logic in React components.
+- When testing components that interact with real data fetching or other side effects based on the route, you might need to mock or stub those dependencies to simulate the expected behavior.
+
+**Choosing the Right Router:**
+
+- For deployed React applications, unless you have specific constraints with static file servers, use `createBrowserRouter` (the default router in React Router v6) for clean URLs and optimal integration with your server-side routing setup.
+- Use `createHashRouter` only if necessary for static file servers, keeping in mind its limitations.
+- In unit tests, employ `createMemoryRouter` to test component behavior for different routes and navigation events in isolation.
+
+By understanding the purposes and use cases of `createHashRouter` and `createMemoryRouter`, you can effectively manage routing in your React applications and ensure proper testing practices.
+
+## Why do we use componentWillUnmount? Show with example
+
+I'd be glad to explain `componentWillUnmount` in React class components and its importance:
+
+**Purpose:**
+
+- `componentWillUnmount` is a lifecycle method in React class components that is invoked **immediately before a component is unmounted and destroyed from the DOM**.
+- It's crucial for performing any necessary cleanup tasks to prevent memory leaks, avoid unexpected behavior, and ensure proper resource management.
+
+**Common Cleanup Actions:**
+
+- **Clearing Timers and Intervals:** If your component sets up timers or intervals using `setTimeout`, `setInterval`, or similar functions, you should clear them in `componentWillUnmount` to prevent them from continuing to run even after the component is no longer needed. This is important to avoid memory leaks and potential issues.
+- **Cancelling Network Requests:** If your component initiates network requests (e.g., using `fetch` or other asynchronous operations), you might want to cancel them in `componentWillUnmount` to prevent them from completing if the component is unmounted before the response arrives. This can improve performance and avoid unnecessary processing.
+- **Removing Event Listeners:** If your component adds event listeners to DOM elements or other objects, you should remove them in `componentWillUnmount` to prevent memory leaks and potential issues where the component tries to interact with elements that no longer exist.
+- **Unsubscribing from Subscriptions:** If your component subscribes to data streams or other sources of updates (e.g., using WebSockets or other libraries), you should unsubscribe from them in `componentWillUnmount` to prevent memory leaks and avoid the component receiving updates after it's unmounted.
+- **Releasing Other Resources:** Any other resources held by the component that need to be released or cleaned up should be addressed in `componentWillUnmount`.
+
+**Example:**
+
+```javascript
+import React, { Component } from 'react';
+
+class MyComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+    this.intervalId = setInterval(() => this.setState({ count: this.state.count + 1 }), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId); // Clear the interval to prevent memory leaks
+  }
+
+  render() {
+    return (
+      <div>
+        You clicked {this.state.count} times
+      </div>
+    );
+  }
+}
+```
+
+**Explanation:**
+
+- This example creates a component that increments a counter every second using an interval.
+- In the `componentWillUnmount` method, the `clearInterval` function is called with the `intervalId` to stop the interval from running after the component is unmounted. This prevents unnecessary CPU usage and potential memory leaks.
+
+**Important Note:**
+
+- While `componentWillUnmount` is a valuable tool for managing cleanup in React class components, it's important to be aware that this lifecycle method is being deprecated in favor of the more flexible approach of using the `useEffect` hook with a cleanup function in functional components.
+
+I hope this explanation clarifies the purpose and usage of `componentWillUnmount`!
+
+## Why can't we have the callback function of useEffect async?
+
+There are two main reasons why you cannot directly make the callback function of `useEffect` asynchronous in React using `async/await`:
+
+1. **Execution Order and Blocking Behavior:**
+
+   - `useEffect` is designed to manage side effects, which often involve interaction with external resources or the DOM.
+   - If the callback function of `useEffect` were `async`, it would execute asynchronously using `await`. This could lead to unexpected behavior because `useEffect` is expected to return synchronously (without blocking the main thread).
+   - Imagine a scenario where you're fetching data using `async/await` inside `useEffect`. The render might happen before the data is fetched, resulting in an empty UI or potential errors.
+
+2. **Cleanup Function Integration:**
+
+   - A crucial aspect of `useEffect` is the ability to return a cleanup function. This function allows you to perform necessary actions like clearing timers, unsubscribing from subscriptions, or releasing resources when the component unmounts or before the effect runs again.
+   - If the callback function were `async`, it would be difficult to integrate the cleanup function effectively. The cleanup function wouldn't be able to guarantee that the asynchronous operation within the `async` function had completed before running the cleanup logic.
+
+**Alternative Approach: Using `async/await` Within `useEffect`**
+
+While you can't directly use `async/await` within the callback function of `useEffect`, here's how you can achieve asynchronous behavior:
+
+1. **Define an Async Function Inside `useEffect`:**
+
+   ```javascript
+   useEffect(() => {
+     const fetchData = async () => {
+       const response = await fetch('https://api.example.com/data');
+       const data = await response.json();
+       // Update state or perform other operations with the data
+     };
+
+     fetchData();
+
+     // Return a cleanup function if necessary (e.g., for subscriptions)
+   }, [/* dependency array */]);
+   ```
+
+2. **Call the Async Function Inside `useEffect`:**
+
+   This approach allows you to use `async/await` within the defined function, ensuring proper asynchronous behavior without blocking the `useEffect` execution itself.
+
+**Summary:**
+
+- `useEffect` expects a synchronous callback function for managing side effects.
+- Using `async/await` directly in the callback can lead to unexpected behavior and difficulty integrating cleanup functions.
+- Define an `async` function inside `useEffect` to achieve asynchronous operations while maintaining the expected synchronous behavior of `useEffect`.

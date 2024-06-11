@@ -1,3 +1,8 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+
 const ContactUs = () => {
   return (
     <div className="contact-us">
@@ -24,17 +29,17 @@ const ContactUs = () => {
       <ul className="contact-us__social">
         <li>
           <a href="#">
-            <i className="fab fa-facebook-f"></i> Facebook
+          <FontAwesomeIcon icon={faFacebook} /> Facebook
           </a>
         </li>
         <li>
           <a href="#">
-            <i className="fab fa-instagram"></i> Instagram
+          <FontAwesomeIcon icon={faInstagram} /> Instagram
           </a>
         </li>
         <li>
           <a href="#">
-            <i className="fab fa-twitter"></i> Twitter
+          <FontAwesomeIcon icon={faTwitter} /> Twitter
           </a>
         </li>
       </ul>
