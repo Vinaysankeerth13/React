@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 const RestaurantMenu = () => {
-
   const { resId } = useParams();
 
   const resInfo = useRestaurantMenu(resId);
@@ -21,16 +20,15 @@ const RestaurantMenu = () => {
     ).card?.card?.itemCards;
 
   return (
-    <div className="menu">
-      <h1>{name ?? "Unknown"}</h1>
-      <h4>
+    <div className="menu m-2 p-5 bg-white rounded-md shadow-md border border-green-500 justify-between">
+      <h1 className="text-xl font-bold mb-4 pb-2">{name ?? "Unknown"}</h1>
+      <h4 className="font-light mb-4 pb-2">
         {cuisines.join(", ") ?? "Unknown"} - {costForTwoMessage ?? "Unknown"}
       </h4>
-      <h2>Menu</h2>
-      {/* <h3>{itemCards[0].card.info.category}</h3> */}
-      <ul>
+      <h2 className="font-bold mb-4 pb-2">Menu</h2>
+      <ul className="">
         {itemCards.map((item) => (
-          <li key={item.card.info.id}>
+          <li key={item.card.info.id} className="text-black-500 mb-4 pb-2 flex items-center justify-between">
             {item.card.info.name} - {"Rs."}{" "}
             {item.card.info.price / 100 || item.card.info.defaultPrice / 100}
           </li>

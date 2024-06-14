@@ -1327,7 +1327,7 @@ React encourages modular and reusable code through the use of components. In thi
 
 Overall, this code demonstrates the basics of creating and rendering React components using functional components, JSX syntax, and ReactDOM for rendering the components to the browser's DOM.
 
-# Day 4 Talk is cheap, show me the code:
+# Day 4 Building basic foundation:
 
 ### What are props in React, explain with an example?
 
@@ -1977,7 +1977,7 @@ Certainly! This code covers several important React concepts:
 
 Overall, this code provides a solid foundation for understanding and working with React components, JSX syntax, rendering lists, and component composition.
 
-# Day 5 Let's get Hooked :
+# Day 5 Let's get Hooked (Hooks):
 
 ## Website Structure :
 
@@ -2227,7 +2227,7 @@ In this example, the `config.js` file exports an object containing environment-s
 
 While the `config.js` file is a common pattern, its naming and structure can vary across projects and frameworks. Some projects may use different file names (e.g., `env.js`, `settings.js`) or organize configuration settings differently (e.g., using environment variables or external files like `.env`). The core idea remains the same: to provide a centralized and manageable way to handle application configuration.
 
-# Day 6 Exploring the world
+# Day 6 Exploring the world (Components)
 
 ## What is Monolith archietecture ? Explain ?
 
@@ -2951,7 +2951,7 @@ In this context, calling `data.json()` allows you to access the JSON data that i
 
 The specifics of how the `data.json()` part works will depend on the actual implementation and structure of the JSON data being processed.
 
-# Day 7 Finding the path
+# Day 7 Finding the path (Fetching API data)
 
 ## What is the diffrence when we have and don't have a dependency array in useEffect hook in react and what diffrence does it make in rendering the component and also explain what happens when the array is empty and not empty also ?
 
@@ -3559,7 +3559,7 @@ In modern web development, a common approach is to combine both client-side and 
 The choice between client-side routing and server-side routing depends on the specific requirements of the web application, such as the need for complex user interactions, the importance of SEO, the performance constraints, and the development team's expertise and preferences.
 
 
-# Day 8 Let's get classy 
+# Day 8 Let's get classy (Class Based Componets)
 
 ## Define class based components in react ?
 
@@ -5187,3 +5187,14 @@ You'll typically need Suspense in React applications when you're dealing with as
 **In Summary:**
 
 Suspense is a powerful feature in React for managing asynchronous operations and enhancing the user experience. It goes hand-in-hand with lazy loading and is especially valuable when your application relies on data fetching, user interactions that trigger asynchronous updates, or handling potential errors gracefully. By using Suspense effectively, you can create well-structured, performant, and resilient React applications.
+
+# Day 10: Styling the App :
+
+## What is Sass and Scss ?
+
+## What is styles components ?
+
+## What is material UI ?
+
+## 
+

@@ -39,19 +39,19 @@ const Body = () => {
   return listOfRestaurant.length == 0 ? (
     <Shimmer />
   ) : (
-    <div className="body">
-      <div className="filter">
-        <div className="search">
+    <div className="body m-2 p-5 bg-white rounded-md shadow-md border border-green-500 justify-between">
+      <div className="filter flex items-center justify-between">
+        <div className="search mr-2 p-4 ">
           <input
             type="text"
-            className="searchBox"
+            className="searchBox border border-solid border-green-500 mr-4"
             value={searchText}
             onChange={(e) => {
               setsearchText(e.target.value);
             }}
           />
           <button
-            className="searchBtn"
+            className="px-4 py-1 bg-custom-color rounded-md  hover:border-green-500"
             onClick={() => {
               const filteredRestuarants = listOfRestaurant.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
@@ -62,19 +62,21 @@ const Body = () => {
             Search
           </button>
         </div>
-        <button
-          className="filter-btn"
+        <div>
+          <button
+          className="px-4 py-1 bg-custom-color rounded-md  hover:border-green-500"
           onClick={() => {
             const filteredList = filteredRestuarants.filter(
               (res) => res.info.avgRating > 4
             );
             setfilteredRestuarants(filteredList);
           }}
-        >
+          >
           Top Rated Restaurants
-        </button>
+          </button>
+        </div>
       </div>
-      <div className="rest-container">
+      <div className="rest-container flex justify-between gap-4 flex-wrap">
         {filteredRestuarants.map((restaurant) => (
          <Link key={restaurant.info.id} to={"/restaurant/" + restaurant.info.id} style={{ textDecoration: "none", color: "inherit" }}><RestaurantCard  resData={restaurant} /></Link> 
         ))}
@@ -84,3 +86,5 @@ const Body = () => {
 };
 
 export default Body;
+
+
