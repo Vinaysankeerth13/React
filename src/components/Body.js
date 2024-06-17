@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -10,6 +10,9 @@ const Body = () => {
   const [listOfRestaurant, setListOfRestaurants] = useState([]);
   const [filteredRestuarants, setfilteredRestuarants] = useState([]);
   const [searchText, setsearchText] = useState("");
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
+
+  console.log(listOfRestaurant);
 
   useEffect(() => {
     fetchData();
@@ -27,14 +30,11 @@ const Body = () => {
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
-  
+
   const onlineStatus = useOnlineStatus();
 
-  if(onlineStatus == false)
-  {
-    return (
-      <OfflinePage/>
-    )
+  if (onlineStatus == false) {
+    return <OfflinePage />;
   }
   return listOfRestaurant.length == 0 ? (
     <Shimmer />
@@ -64,21 +64,31 @@ const Body = () => {
         </div>
         <div>
           <button
-          className="px-4 py-1 bg-custom-color rounded-md  hover:border-green-500"
-          onClick={() => {
-            const filteredList = filteredRestuarants.filter(
-              (res) => res.info.avgRating > 4
-            );
-            setfilteredRestuarants(filteredList);
-          }}
+            className="px-4 py-1 bg-custom-color rounded-md  hover:border-green-500"
+            onClick={() => {
+              const filteredList = filteredRestuarants.filter(
+                (res) => res.info.avgRating > 4
+              );
+              setfilteredRestuarants(filteredList);
+            }}
           >
-          Top Rated Restaurants
+            Top Rated Restaurants
           </button>
         </div>
       </div>
       <div className="rest-container flex justify-between gap-4 flex-wrap">
         {filteredRestuarants.map((restaurant) => (
-         <Link key={restaurant.info.id} to={"/restaurant/" + restaurant.info.id} style={{ textDecoration: "none", color: "inherit" }}><RestaurantCard  resData={restaurant} /></Link> 
+          <Link
+            key={restaurant.info.id}
+            to={"/restaurant/" + restaurant.info.id}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            {restaurant.info.isOpen ? (
+              <RestaurantCardPromoted resData={restaurant} />
+            ) : (
+              <RestaurantCard resData={restaurant} />
+            )}
+          </Link>
         ))}
       </div>
     </div>
@@ -86,5 +96,3 @@ const Body = () => {
 };
 
 export default Body;
-
-

@@ -5196,5 +5196,18 @@ Suspense is a powerful feature in React for managing asynchronous operations and
 
 ## What is material UI ?
 
-## 
+## In tailwind.config.js, what does all the keys mean (content, theme, extend,plugins)?
 
+## Why do we have .postcssrc file?
+
+# Day 11: Data is the new oil (How to handle data in react) ?
+
+## What is a higher order component ?
+
+## What are Controlled and Uncontrolled Components ?
+
+## What is lifting the state up ?
+
+## What is an accordian ?
+
+## 
