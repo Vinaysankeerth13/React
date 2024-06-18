@@ -5210,4 +5210,18 @@ Suspense is a powerful feature in React for managing asynchronous operations and
 
 ## What is an accordian ?
 
-## 
+## What are controlled and Uncontrolled Components ?
+
+## Can I modify the state variable of my parent component from the child component ?
+
+## What is props drilling ?
+
+## What is one way data flow and how is it related to react ?
+
+## What is context API in react ?
+
+## Can we have multiple user providers or nested user providers ?
+
+## What is Context Provider and Context Consumer?
+
+## If you don’t pass a value to the provider does it take the default value?

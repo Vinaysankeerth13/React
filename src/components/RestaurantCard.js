@@ -6,7 +6,7 @@ const RestaurantCard = (props) => {
     resData?.info;
   const { deliveryTime } = resData?.info?.sla;
   return (
-    <div className="res-card w-[300px] h-[480px] p-3 bg-custom-color rounded-md shadow-md hover:border hover:border-green-500 hover:cursor-pointer">
+    <div className="res-card w-[300px] h-[520px] p-3 bg-custom-color rounded-md shadow-md hover:border hover:border-green-500 hover:cursor-pointer">
       <div>
         <img
           className="resImg p-2 w-[300px] h-[300px]"

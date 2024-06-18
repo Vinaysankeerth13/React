@@ -1,59 +1,13 @@
-// import { useState } from "react";
-// import { LOGO_URL } from "../utils/constants";
-// import { Link } from "react-router-dom";
-// import useOnlineStatus from "../utils/useOnlineStatus";
-
-// const Header = () => {
-//   const [btnName,setbtnName] = useState("Login");
-//   const onlineStatus = useOnlineStatus();
-//     return (
-//       <div className="header">
-//         <div className="logo">
-//           <img
-//             className="logo"
-//             src = {LOGO_URL}
-//           />
-//         </div>
-//         <div className="navbtn">
-//           <ul>
-//             <li>
-//               Online Staus: {onlineStatus ? "🟢": "🔴"}
-//             </li>
-//             <li>
-//               <Link to="/" onClick="/">Home</Link>
-//             </li>
-//             <li>
-//               <Link to="/about">About Us</Link>
-//             </li>
-//             <li>
-//             <Link to="/contact">Contact Us</Link>
-//             </li>
-//             <li>
-//             <Link to="/cart">Cart</Link>
-//             </li>
-//             <button className="button" onClick={() => {
-//              btnName == "Login" ? setbtnName("Logout") : setbtnName("Login");
-//             }}>{btnName}</button>
-//           </ul>
-//         </div>
-//       </div>
-//     );
-//   };
-
-//   function refreshPage() {
-//     window.location.reload(false);
-//   }
-
-// export default Header;
-
-import { useState } from "react";
+import { useState , useContext } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
   const onlineStatus = useOnlineStatus();
+  const {loggedInUser} = useContext(UserContext);
 
   return (
     <header className="header flex justify-between bg-white rounded-md shadow-md border border-green-500 m-2 items-center">
@@ -99,6 +53,7 @@ const Header = () => {
               {btnName}
             </button>
           </li>
+          <li className="p-2 text-black font-bold">{loggedInUser}</li>
         </ul>
       </nav>
     </header>

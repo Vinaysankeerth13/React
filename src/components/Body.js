@@ -1,10 +1,11 @@
 import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { RESTAURANT_LISTING } from "../utils/constants";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import OfflinePage from "./OfflinePage";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [listOfRestaurant, setListOfRestaurants] = useState([]);
@@ -36,6 +37,9 @@ const Body = () => {
   if (onlineStatus == false) {
     return <OfflinePage />;
   }
+
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
   return listOfRestaurant.length == 0 ? (
     <Shimmer />
   ) : (
@@ -44,7 +48,7 @@ const Body = () => {
         <div className="search mr-2 p-4 ">
           <input
             type="text"
-            className="searchBox border border-solid border-green-500 mr-4"
+            className="searchBox border border-solid border-green-500 mr-4 p-1"
             value={searchText}
             onChange={(e) => {
               setsearchText(e.target.value);
@@ -74,6 +78,16 @@ const Body = () => {
           >
             Top Rated Restaurants
           </button>
+        </div>
+        <div>
+          <label className="p-2">Username: </label>
+          <input
+            className="border border-black p-1"
+            value={loggedInUser}
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+          ></input>
         </div>
       </div>
       <div className="rest-container flex justify-between gap-4 flex-wrap">
